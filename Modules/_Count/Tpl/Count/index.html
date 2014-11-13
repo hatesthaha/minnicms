@@ -1,0 +1,71 @@
+<extend name="Public:master" />
+<block name="body">
+    <div class="wanhutop">
+    <div class="position">优化推广 &gt; <a href="">访问统计</a></div>
+    </div>
+    <div class="clear"></div>
+    <div class="stat_list">
+        <ul>
+            <li ><a href="{:U("_Count/Count/index")}" title="来访统计">来访统计</a></li>
+
+        </ul>
+    </div>
+    <div class="v52fmbx_tbmax">
+        <div class="v52fmbx_tbbox">
+                <table class="table neitable columntables" cellpadding="0" cellspacing="1" id="main_table">
+                    <tr>
+                        <td class="centle" style="font-weight:normal;" colspan="6">
+                            
+                            <span id="loadtxt"></span>
+                        </td>
+                    </tr>
+                    <tr id="list-top">
+                        <div style="width:40%;float:left">
+                            <canvas id="canvas" height="450" width="450"></canvas>
+                        </div>
+                        <div style="float:left;margin-left:200px;margin-top:20px">
+                            <volist name="data" id="vo">
+                                {$vo}<br /><br />
+                            </volist>
+                            
+                        </div>
+                    </tr>
+
+                </table>
+        </div>
+    </div>
+    <script>
+    var radarChartData = {
+        labels: [{$name}],
+        datasets: [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [{$sum}]
+            },
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [{$sum}]
+            }
+        ]
+    };
+
+    window.onload = function(){
+        window.myRadar = new Chart(document.getElementById("canvas").getContext("2d")).Radar(radarChartData, {
+            responsive: true
+        });
+    }
+
+    </script>
+</block>

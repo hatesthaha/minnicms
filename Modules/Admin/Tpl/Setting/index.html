@@ -1,0 +1,161 @@
+<extend name="Public:master" />
+<block name="body">
+    <body id="column">
+        <div class="wanhutop">
+            <div class="position">网站设置 &gt; <a href="{:U('Admin/Setting/index')}">基本设置</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+<form method="POST" name="myform" action="{:U('Admin/Setting/postAdd')}" target="_self"  encType="multipart/form-data">
+
+    <php>if($option_id):</php>
+    <input type="hidden" class="input" name="option_id" value="{$option_id}">
+    <php>endif;</php>
+    <div class="v52fmbx_tbmax">
+        <div class="v52fmbx_tbbox">
+            <div class="v52fmbx">
+                <h3 class="v52fmbx_hr metsliding" sliding="1">基本设置</h3>
+                <div class="metsliding_box metsliding_box_1">
+                <div class="v52fmbx_dlbox">
+                    <dl>
+                        <dt style="width: 92px;" >网站名称：</dt>
+                        <dd >
+                            <input name="options[site_name]" class="text" value="{$site_name}" type="text">
+                        </dd>
+                    </dl>
+                </div>
+                <div class="v52fmbx_dlbox">
+                    <dl>
+                        <dt style="width: 92px;" >网站LOGO：</dt>
+                        <dd>
+                            <style>
+                            #file_upload {}
+                            </style>
+                            <div class="avatar_box">
+                                <a href='javascript:void(0);' onclick="javascript:$('#file_upload').uploadify('upload','*');">
+                                    <?php $img_a = empty($logo) ? "../assets/img/upload-pic.png" : "__ROOT__/Public/Uploads/".$logo; ?>
+                                <img id="image" src="{$img_a}" width="135" height="113" border="0" />
+                                </a>
+
+                                <div class="upload_avatar">
+                                    <input id="file_upload" name="file_upload" type="file" multiple="true" value="" />
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                            $(function() {
+                                $('#file_upload').uploadify({
+                                    'swf': '../assets/statics/uploadify/uploadify.swf',
+                                    'uploader': '{:U("Admin/Public/uploadify")}',
+                                    'buttonText': '上传图片',
+                                    'onUploadSuccess': function(file, data, response) {
+                                        $('#image').attr('src', '__ROOT__/Public/Uploads/' + data);
+                                        $('#logo').val(data);
+                                    },
+                                });
+                            });
+                            </script>
+                            <input type="hidden" name="options[logo]" id="logo" value="{$logo}" />
+                        </dd>
+                    </dl>
+                </div>
+                <div class="v52fmbx_dlbox on_dlbox">
+                <dl>
+                    <dt style="width: 92px;">网站网址：</dt>
+                    <dd>
+                        <input name="options[site_host]" class="text" value="{$site_host}" type="text">
+                        <span class="tips color390"></span>
+                    </dd>
+                </dl>
+                </div>
+                <div class="v52fmbx_dlbox">
+                <dl>
+                    <dt style="width: 92px;">网站关键词：</dt>
+                    <dd style="width: 900px;">
+                    <input name="options[site_seo_keywords]" class="text gen" value="{$site_seo_keywords}" type="text ">
+                    <span class="tips">多个关键词请用竖线|隔开，建议3到4个关键词。</span>
+                    </dd>
+                </dl>
+                </div>
+                <div class="v52fmbx_dlbox">
+                <dl>
+                    <dt style="width: 92px;">网站描述：</dt>
+                    <dd style="width: 900px;">
+                    <textarea name="options[site_seo_description]" class="textarea gen">{$site_seo_description}</textarea>
+                    <span class="tips">100字以内</span>
+                    </dd>
+                </dl>
+                </div>
+            <h3 class="v52fmbx_hr metsliding" sliding="2">底部信息设置（显示在网站前台底部）</h3>
+            <div class="metsliding_box metsliding_box_2">
+                <div class="v52fmbx_dlbox">
+                    <dl>
+                        <dt style="width: 92px;">版权信息：</dt>
+                        <dd style="width: 900px;">
+                            <input name="options[site_copyright]" class="text max" value="{$site_copyright}" type="text">
+                            <span class="tips">支持HTML语言</span>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="v52fmbx_dlbox">
+                    <dl>
+                        <dt style="width: 92px;">地址邮编：</dt>
+                        <dd style="width: 900px;">
+                            <input name="options[site_code]" class="text max" value="{$site_code}" type="text">
+                            <span class="tips">支持HTML语言</span>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="v52fmbx_dlbox">
+                    <dl>
+                        <dt style="width: 92px;">联系方式：</dt>
+                        <dd style="width: 900px;">
+                            <input name="options[site_contact]" class="text max" type="text" value="{$site_contact}">
+                            <span class="tips">支持HTML语言</span>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="v52fmbx_dlbox">
+                    <dl>
+                        <dt style="width: 92px;">其他信息：</dt>
+
+                        <dd style="width: 900px;">
+                            <textarea rows="20" id="editor_id" name="options[site_other]">{$site_other}</textarea>
+
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+             <div class="v52fmbx_submit"><input name="Submit" value="保存" class="submit"  type="submit"></div>
+        </div>
+
+    </div>
+</form>
+<load href="../assets/statics/editor/themes/default/default.css" />
+<load href="../assets/statics/editor/plugins/code/prettify.css" />
+<load href="../assets/statics/editor/kindeditor.js" />
+<load href="../assets/statics/editor/plugins/code/prettify.js" />
+<script>
+  var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('textarea[id="editor_id"]', {
+        uploadJson : '../assets/statics/editor/php/upload_json.php',
+        fileManagerJson : '../assets/statics/editor/php/file_manager_json.php',
+        themeType : 'simple',
+        langType:'zh-cn',
+        allowFileManager : true,
+        allowPreviewEmoticons : true,//远程图片关闭
+        allowImageUpload : true, //显示上传图片按钮
+        afterBlur:function(){this.sync();},
+        items : ['source', '|', 'fullscreen', 'undo', 'redo', 'print', 'cut', 'copy', 'paste',
+                'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                'superscript',
+                'title', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                'italic', 'underline', 'strikethrough', 'removeformat', '|', 'image',
+                'flash', 'media', 'advtable',  'emoticons', 'link', 'unlink',
+                '|', 'baidumap','code','about'],
+        });
+    });
+</script>
+    </body>
+</block>

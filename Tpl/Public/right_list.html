@@ -1,0 +1,19 @@
+<div class="right">
+    <ul>
+        <?php foreach ($data as $key => $value): ?>
+            <?php if (is_numeric($key)): ?>
+                <li>
+                    <span>{$value.create_time}</span>
+                    <a href="{:a_link($value['tpl_name'].'?id='.$value['id'].'&term_id='.$value['term_id'])}">{$value.title}</a>
+                    <p>{$value.seo_contents}</p>
+                </li>
+            <?php endif ?>
+        <?php endforeach ?>
+    </ul>
+</div>
+
+
+<div class="pageShow">
+    {$data.pageShow}
+</div>
+

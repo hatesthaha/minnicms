@@ -1,0 +1,57 @@
+<extend name="Public:master" />
+<block name="body">
+    <body>
+        <div class="wanhutop">
+
+            <div class="position">企业应用 &gt; <a href="{:U("_Slider/Slidercat/index")}">网站幻灯片</a> &gt; 添加幻灯片分类</div>
+
+
+            <div class="return"><a href="{:U("_Slider/Slidercat/index")}">&lt;&lt;返回</a>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+
+        <form method="POST" name="myform" action="{:U('_Slider/Slidercat/postAdd')}" target="_self">
+            <div class="v52fmbx_tbmax">
+                <div class="v52fmbx_tbbox">
+                    <div class="v52fmbx">
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">幻灯片分类名称：</dt>
+                                <dd>
+                                    <input name="cat_name" class="text nonull" value="" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">幻灯片分类标识：</dt>
+                                <dd>
+                                    <input name="cat_idname" class="text nonull" value="" type="text">
+                                    <span>英文字母+数字+“_”</span>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">幻灯片分类描述：</dt>
+                                <dd style="width: 900px;">
+                                    <textarea cols="50" rows="15" name="cat_remark"></textarea>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div class="v52fmbx_submit">
+                            <input name="Submit" value="保存" class="submit" type="submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </body>
+</block>

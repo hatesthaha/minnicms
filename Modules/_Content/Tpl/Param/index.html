@@ -1,0 +1,236 @@
+<extend name="Public:master" />
+<block name="body">
+
+    <body>
+        <div class="wanhutop">
+
+            <div class="position">简体中文 &gt; 内容管理 &gt; <a href="">参数设置</a>
+            </div>
+
+
+            <div class="return"><a href="javascript:metreturn('');">&lt;&lt;返回</a>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="v52fmbx_tbmax">
+            <div class="v52fmbx_tbbox">
+                <table class="table" cellpadding="0" cellspacing="0">
+
+                    <tr>
+                        <td colspan="0" class="centle" style="font-weight:normal; color:#999;">
+                            &nbsp;&nbsp;参数一般用于展示信息的属性，如价格、型号等，设置后在添加内容的时候可以填写对应参数值。<span style="color: red;" id="msg_info"></span>
+                        </td>
+                    </tr>
+
+
+                    <table class="table neitable" cellpadding="0" cellspacing="1">
+                        <tbody>
+                            <tr id="list-top">
+                                <td class="list" width="90">排序</td>
+                                <td class="list">名称</td>
+								<td class="list" width="160">适用栏目</td>
+                                <td class="list" width="160">字段类型</td>
+                                <td class="list list_left" width="160">操作</td>
+
+                            </tr>
+
+
+							<volist name="data" id="vo">
+
+								<tr class="mouse">
+
+
+
+	                                <td class="list-text">
+                                        <input type="hidden" name="id" value="{$vo.param_id}" class="oldid"/>
+	                                    <span class="oldlist">{$vo.param_listorder}</span>
+	                                </td>
+	                                <td class="list-text" style="padding-left:20px; text-align:left;">
+	                                    <span class="oldparamname">{$vo.param_name}</span>
+	                                </td>
+									<td class="list-text" id="parent_parent_id_0">
+										<span class="oldname" pname="{$vo.term_id}">{$vo.name}</span>
+									</td>
+	                                <td class="list-text">
+	                                    <span class="oldparamtype" sname="{$vo['param_type']}">{:$dParam->type[$vo['param_type']]}</span>
+	                                </td>
+
+	                                <td class="list-text list_left">
+										<a href="javascript:;" class="edit">编辑</a>
+	                                    <a href="javascript:;" class="del" style="margin-left: 10px;">删除</a>
+	                                    <?php if ($vo['param_type'] > 2): ?>
+	                                   		<a href="{:U('_Content/Param/setParam',array("param_id"=>$vo['param_id']))}" style="margin-left: 10px;">设置选项</a>
+	                                    <?php endif ?>
+	                                </td>
+	                            </tr>
+	                        </volist>
+
+
+
+                            <tr class="mouse" style="display: none;" id="tpl">
+
+
+
+                                <td class="list-text">
+                                    <input type="hidden" name="id" value="" />
+                                    <input type="text" class="text" style="width: 30px;" name="listorder" value="0" />
+                                </td>
+                                <td class="list-text" style="padding-left:20px; text-align:left;">
+                                    <input type="text" class="text" style="width: 300px;" name="name">
+                                </td>
+								<td class="list-text" id="parent_parent_id_0">
+								    <select name="term_id" class="term_select">
+								    	<volist name="select_data" id="vo">
+								    		<option value="{$vo.id}">{$vo.name}</option>
+								    	</volist>
+								    </select>
+									<script>
+									// $(document).ready(function() {
+									//     $("body").on("change", ".term_select", function() {
+									//         var parent_id = $(this).val();
+									//         console.log(parent_id);
+									//         var this_list = $(this).parent(".list-text");
+									//         var parent_parent = $(this_list).attr("id").replace("parent_parent_id_","");
+									//         $.post('{:U("_Content/Term/getChild")}', {
+									//             parent_id   : parent_id,
+									//             term_select : 1
+									//         }, function(data, textStatus, xhr) {
+									//         	$(this_list).children(".term_select").remove();
+									//         	$(this_list).append(data);
+									//         	$(this_list).attr("id","parent_parent_id_" + parent_id);
+									//         	console.log("parent_id:" + parent_id);
+									//         	console.log("parent_parent:" + parent_parent);
+									//         	$(this_list).children(".term_select").prepend("<option value='" + parent_parent + "'>返回上层分类</option>");
+									//         	console.log(data);
+									//         });
+									//     });
+									// });
+									</script>
+
+								</td>
+                                <td class="list-text">
+                                    <select name="type">
+                                    	<?php foreach ($typeData as $key => $value): ?>
+                                    		<option value="{$key}">{$value}</option>
+                                    	<?php endforeach ?>
+                                    </select>
+                                </td>
+
+                                <td class="list-text list_left">
+									<a href="javascript:;" class="save">保存</a>
+                                    <a href="javascript:;" class="cancel-a" style="margin-left: 10px;">取消</a>
+                                </td>
+                            </tr>
+
+
+
+                            <tr id="bottom-id">
+                                <td class="list-text"></td>
+                                <td class="list-text" colspan="8" style="text-align:left;">&nbsp;&nbsp;
+                                	<a href="javascript:;" id="add_do">+添加新字段</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </table>
+            </div>
+        </div>
+		<script>
+		$(document).ready(function() {
+		    $("#add_do").click(function() {
+		        $(".mouse:last").after($("#tpl").clone());
+		        var clone = $(".mouse:last");
+		        clone.show();
+		        clone.attr("id", "");
+		    });
+            $("body").on("click", ".cancel-a", function() {
+                window.location.reload();
+            });
+            $("body").on("click", ".del", function() {
+                var thistd = $(this).parents(".mouse").children("td");
+                var id = $(thistd).children(".oldid").val();
+                $.post('{:U("_Content/Param/postDelete")}', {id: id}, function(data, textStatus, xhr) {
+                    if(confirm("确定要删除此参数吗？")){
+                        alert(data);
+                        window.location.reload();
+                    }
+                });
+            });
+            $("body").on("click", ".edit", function() {
+                var thistd = $(this).parents(".mouse").children("td");
+                $(this).parents(".mouse").after($("#tpl").clone().show());
+                $("#tpl").attr("id","");
+                var id = $(thistd).children(".oldid").val();
+                var name = $(thistd).children(".oldlist").text();
+                var oldparamname = $(thistd).children(".oldparamname").text();
+                var oldname = $(thistd).children(".oldname").attr('pname');
+                var oldparamtype = $(thistd).children(".oldparamtype").attr('sname');
+                $(this).parents(".mouse").next().children().children("input[name='id']").val(id);
+                $(this).parents(".mouse").next().children().children("input[name='listorder']").val(name);
+                $(this).parents(".mouse").next().children().children("input[name='name']").val(oldparamname);
+                $(this).parents(".mouse").next().children().children("select[name='type']").val(oldparamtype);
+                $(this).parents(".mouse").next().children().children("select[name='term_id']").val(oldname);
+                thistd.remove();
+
+            });
+		    $("body").on("click", ".save", function() {
+		    	var thisclick = $(this);
+		        var thistd = $(this).parents(".mouse").children("td");
+                var id = $(thistd).children("input[name='id']").val();
+		        var name = $(thistd).children("input[name='name']").val();
+		        var listorder = $(thistd).children("input[name='listorder']").val();
+		        var type = $(thistd).children("select[name='type']").val();
+		        var type_name = $(thistd).children("select[name='type']").find("option:selected").text();
+		        var term_id = $(thistd).children(".term_select").val();
+		        var term_name = $(thistd).children(".term_select").find("option:selected").text();
+                var url = '{:U("_Content/Param/postAdd")}';
+                if(id){
+                    url = '{:U("_Content/Param/postEdit")}';
+                }
+
+		        if ($.trim(name) === "") {
+		            alert("名称不能为空");
+		        }else if(!$.isNumeric(listorder)){
+		        	 alert("排序只能为数字");
+		        }else{
+		            $.post(url, {
+                        param_id        : id,
+		                param_name		: name,
+		                param_listorder : listorder,
+		                param_type		: type,
+		                term_id 		: term_id
+		            }, function(data, textStatus, xhr) {
+		                if(data.status === 1){
+                            if(data.rs){
+                                $(thistd).children("input[name='id']").after('<input type="hidden" name="id" value="'+ data.rs +'" class="oldid"/>');
+                            }else{
+                                $(thistd).children("input[name='id']").after('<input type="hidden" name="id" value="'+ id +'" class="oldid"/>');
+                            }
+
+		                	$(thistd).children("input[name='name']").after('<span class="oldparamname">' + name + '</span>');
+		                	$(thistd).children("input[name='name']").remove();
+
+		                	$(thistd).children("input[name='listorder']").after('<span class="oldlist">' + listorder + '</span>');
+		                	$(thistd).children("input[name='listorder']").remove();
+
+		                	$(thistd).children("select[name='type']").after('<span class="oldname" pname="'+term_id+'" >' + type_name + '</span>');
+		                	$(thistd).children("select[name='type']").remove();
+
+		                	$(thistd).children(".term_select").after('<span class="oldparamtype" sname="'+type+'" >' + term_name + '</span>');
+		                	$(thistd).children(".term_select").remove();
+
+		                }
+		                $("#msg_info").html(data.info);
+		                $("#msg_info").fadeOut("slow");
+
+		                $(thisclick).html("编辑");
+		                $(thisclick).attr("class","edit");
+		            });
+		        }
+		    });
+
+		});
+		</script>
+    </body>
+</block>

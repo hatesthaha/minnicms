@@ -1,0 +1,219 @@
+<extend name="Public:master" />
+<block name="body">
+
+    <body>
+        <div class="wanhutop">
+
+            <div class="position">网站设置 &gt; <a href="{:U("_Content/Term/index")}">栏目设置</a> &gt; 编辑栏目({$info.name})</div>
+
+
+            <div class="return"><a href="javascript:metreturn('');">&lt;&lt;返回</a>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+
+        <form method="POST" name="myform" action="{:U('_Content/Term/postEdit')}" target="_self">
+            <div class="v52fmbx_tbmax">
+                <div class="v52fmbx_tbbox">
+                    <div class="v52fmbx">
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">上级栏目选项：</dt>
+
+                                <dd>
+                                    {$select_content}
+                                    <script>
+                                    $(document).ready(function() {
+                                        $.each(jQuery.parseJSON('{$parents}'), function(index, val) {
+                                            if(val !== '0'){
+
+                                                $("#depth_" + index).get(0).value = val;
+                                            }
+                                        });
+                                        set_parent_id({$info.parent_id});
+                                        function set_parent_id(id){
+                                            $("input[name='parent_id']").val(id);
+                                            $.post('{:U("_Content/Term/getParentInfo")}', { id : id }, function(data, textStatus, xhr) {
+                                                if(data){
+                                                    $("#parent_name").html(data.name);
+                                                }else{
+                                                    $("#parent_name").html("一级分类");
+                                                }
+                                            });
+                                        }
+                                        $("body").on('change', '.term_select', function() {
+                                            var term_select = $(this);
+                                            var id = term_select.val();
+                                            $.isNumeric(id) ? set_parent_id(id):"";
+
+                                            if ($("option[value='" + id + "']").last().hasClass("hasChild")) {
+                                                $.post('{:U("_Content/Term/getChild")}', {
+                                                    parent_id: id,
+                                                    term_select: 1
+                                                }, function(data, textStatus, xhr) {
+                                                    term_select.after(data);
+                                                });
+                                            }
+                                            var this_depth = parseInt(term_select.attr("id").replace("depth_", ""));
+                                            var last_depth = parseInt($(".term_select").last().attr("id").replace("depth_", ""));
+                                            for (var i = this_depth + 1; i <= last_depth; i++) {
+                                                $("#depth_" + i).remove();
+                                            };
+                                        });
+                                    });
+                                    </script>
+
+                                    <input type="hidden" name="parent_id" value="{$info.parent_id}" />
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">上级栏目名称：</dt>
+                                <dd>
+                                    <span id="parent_name"></span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">栏目名称：</dt>
+                                <dd>
+                                    <input name="name" class="text nonull" value="{$info.name}" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">同级栏目排序：</dt>
+                                <dd>
+                                    <input name="listorder" class="text small" value="{$info.listorder}" type="text">
+                                    <span class="tips">排序越小越靠前</span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">模块名：</dt>
+                                <dd>
+                                    <select name="type" id="type" style="width: 80px;">
+                                        <volist name="allType" id="vo">
+                                            <option value="{$vo.type_id}" tpl="{$vo.type_tpl}" <?php echo $vo['type_id'] == $info['type'] ? 'selected="selected"':""; ?>>{$vo.type_name}</option>
+                                        </volist>
+                                    </select>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">模版名称：</dt>
+                                <dd>
+                                    <input name="tpl_name" class="text nonull" value="{$info.tpl_name}" type="text">
+                                    <span class="tips">用于模版名的设置</span>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <h3 class="v52fmbx_hr metsliding">
+                            搜索引擎优化设置(seo)
+                        </h3>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">栏目标题(title)：</dt>
+                                <dd>
+                                    <input name="title" class="text" maxlength="200" type="text" value="{$info.title}">
+                                    <span class="tips">为空则使默认为名称</span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">关键词：</dt>
+                                <dd>
+                                    <input name="keywords" class="text" maxlength="200" type="text"  value="{$info.keywords}">
+                                    <span class="tips">多个关键词请用","隔开</span>
+                                </dd>
+                            </dl>
+                        </div>
+
+
+                        <h3 class="v52fmbx_hr metsliding">其它设置</h3>
+
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">栏目图片：</dt>
+                                <dd>
+                                    <div class="avatar_box">
+                                        <img id="image" src="{:empty($info['img'])?'../assets/img/upload-pic.png': __ROOT__.'/'.C('UPLOAD_PATH').$info['img']}" width="135" height="113" border="0" />
+                                        <div class="upload_avatar">
+                                            <input id="file_upload" name="file_upload" type="file" multiple="true" value="" />
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                    $(function() {
+                                        $('#file_upload').uploadify({
+                                            'swf': '../assets/statics/uploadify/uploadify.swf',
+                                            'uploader': '{:U("Admin/Public/uploadify")}',
+                                            'buttonText': '上传图片',
+                                            'onUploadSuccess': function(file, data, response) {
+                                                $('#image').attr('src', '../upload' + data);
+                                                $('#img').val(data);
+                                            },
+                                        });
+                                    });
+                                    </script>
+                                    <input type="hidden" name="img" id="img" value="{$info.img}" />
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 72px;">详细内容：</dt>
+                                <dd style="width: 900px;">
+                                    <textarea rows="20" cols="50" name="content">{$info.content}</textarea>
+
+                                </dd>
+                            </dl>
+                        </div>
+
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">前台显示：</dt>
+                                <dd>
+                                    <label>
+                                        <input name="status" class="radio" <?php echo $info['status'] == '1' ? 'checked="checked"' : ""; ?> value="1" type="radio">是
+                                    </label>
+                                    <label>
+                                        <input name="status" class="radio" <?php echo $info['status'] != '1' ? 'checked="checked"' : ""; ?> value="0" type="radio">否
+                                    </label>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">新窗口打开：</dt>
+                                <dd>
+                                    <label>
+                                        <input name="target" class="radio" <?php echo $info['target'] == '_blank' ? 'checked="checked"' : ""; ?> value="_blank" type="radio">是</label>
+                                    <label>
+                                        <input name="target" class="radio" <?php echo $info['target'] != '_blank' ? 'checked="checked"' : ""; ?> value="" type="radio">否</label>
+                                    <span class="tips">设置栏目链接是否在新窗口打开</span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <input name="id" value="{$info.id}" type="hidden" />
+
+                        <div class="v52fmbx_submit">
+                            <input name="Submit" value="保存" class="submit" type="submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </body>
+</block>

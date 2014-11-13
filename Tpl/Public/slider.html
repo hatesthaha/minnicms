@@ -1,0 +1,17 @@
+
+    <div id="owl-demo" class="owl-carousel owl-theme">
+        <foreach name="data" item="vo">
+            <div class="item"><img src="../upload/{$vo.banner}" /></div>
+        </foreach>
+    </div>
+    <script>
+    $(document).ready(function() {
+        $("#owl-demo").owlCarousel({
+                navigationText : false,
+                slideSpeed : 300,
+                itemsCustom : false,
+                paginationSpeed : 400,
+                singleItem : true,
+            });
+        });
+    </script>

@@ -1,0 +1,106 @@
+<extend name="Public:master" />
+<block name="body">
+    <body id="column">
+        <div class="wanhutop">
+            <div class="position">内容管理 &gt; <a href="#">单页管理</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="v52fmbx_tbmax">
+            <div class="v52fmbx_tbbox">
+                <div class="contc3 classlist2">
+                    {$select_data} <br /><span id="parent_name"></span>
+                    <script>
+                    $(document).ready(function() {
+                        $("#submit-button").attr("disabled", true);
+                        function set_parent_id(id){
+                            $("input[name='term_id']").val(id);
+                            $.post('{:U("_Content/Term/getParentInfo")}', { id : id }, function(data, textStatus, xhr) {
+                                if(data.type === "3"){
+                                    $("#parent_name").html(data.name);
+                                    $.post('{:U("_Content/Page/getList")}', { term_id : id}, function(data, textStatus, xhr) {
+                                        set_data(data);
+                                    });
+                                }else{
+                                    $("#parent_name").html(data.name + "<span style='color:red;margin-left:10px;'>(注:此不分类不是单页分类)</span>");
+                                }
+                            });
+                        }
+                        function set_data(data){
+                            $("#loadtxt").html("");
+                            $(".mouse").remove();
+                            $("#list-top").after(data.data);
+                            $("#pages").html(data.page);
+                        }
+                        $("body").on('change', '.term_select', function() {
+                            var term_select = $(this);
+                            var id = term_select.val();
+                            $.isNumeric(id) ? set_parent_id(id):"";
+
+                            if ($("option[value='" + id + "']").last().hasClass("hasChild")) {
+                                $.post('{:U("_Content/Page/getChild")}', {
+                                    parent_id: id,
+                                    term_select: 1
+                                }, function(data, textStatus, xhr) {
+                                    term_select.after(data);
+                                });
+                            }
+                            var this_depth = parseInt(term_select.attr("id").replace("depth_", ""));
+                            var last_depth = parseInt($(".term_select").last().attr("id").replace("depth_", ""));
+                            for (var i = this_depth + 1; i <= last_depth; i++) {
+                                $("#depth_" + i).remove();
+                            };
+                        });
+                        $("body").on("click","#pages a",function(){
+                            var href = $(this).attr("href");
+                            $.get(href, function(data) {
+                                set_data(data);
+                            });
+                            return false;
+                        });
+                    });
+                    </script>
+                </div>
+                <form method="POST" name="myform" action="{:U('_Content/Page/listorder')}" target="_self">
+                <table class="table neitable columntables" cellpadding="0" cellspacing="1" id="main_table">
+                    <tr>
+                        <td class="centle" style="font-weight:normal;" colspan="8">
+                            <a href="{:U("_Content/Page/add",array('parent_id'=>'0'))}">+ 添加单页</a>
+                            <font style="margin-left: 10px; color:#999;">排序越小越靠前</font>
+                            <span id="loadtxt">前100文章</span>
+                        </td>
+                    </tr>
+                    <tr id="list-top">
+                        <td class="list" width="30">ID</td>
+                        <td class="list" width="30">排序</td>
+                        <td class="list">标题</td>
+                        <td class="list" width="60">前台显示</td>
+                        <td class="list" width="70">模板</td>
+                        <td class="list" width="110">操作</td>
+                    </tr>
+                    <include file="getList" />
+                    <script>
+                    $(document).ready(function() {
+                        $("#main_table").on("click", ".del_page", function(){
+                            var id = $(this).attr("id").replace("page_del_","");
+                                if(confirm("确定要删除此栏目吗？")){
+                                $.post('{:U("_Content/Page/postDelete")}', {id: id}, function(data, textStatus, xhr) {
+                                        alert(data);
+                                        window.location.reload();
+                                });
+                              }
+                        });
+                    });
+                    </script>
+                    <tr>
+                        <td style="padding:5px;" colspan="8" class="all-submit">
+                        <input type="submit"  class="submit li-submit" value="保存排序" name="saveorder">
+                        </td>
+                    </tr>
+                </table>
+                </form>
+                <div id="pages"></div>
+            </div>
+        </div>
+    </body>
+</block>

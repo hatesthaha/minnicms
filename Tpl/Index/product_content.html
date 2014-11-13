@@ -1,0 +1,78 @@
+<extend name="Public:master" />
+
+<block name="head">
+    <load href="../index/css/case.css" />
+</block>
+
+<block name="body">
+<?php
+      $termInfo = WH("model.content/Term")->find($_GET["term_id"]);
+
+      $leftNav = clone $termInfo;
+      $leftNav->html->WHHtml("left_nav");
+      $termInfo = $termInfo->dataData;
+
+      $productInfo = WH("model.content/Product")->find($_GET['id'])->dataData;
+
+      $next = WH("model.content/Product")->read($_GET["id"])->getNext();
+      $next->html->WHHtml("pagenext");
+
+      $up = WH("model.content/Product")->read($_GET["id"])->getNext("up");
+      $up->html->WHHtml("pagenext");
+?>
+<div id="content">
+  <div class="content">
+    {$leftNav}
+    <div id="right">
+      <h3>
+            <span>{$termInfo.name}</span>
+            当前位置：<a href="{:a_link('index')}">首页</a> &#62;
+            <a href="javascript:;">{$termInfo.name}</a></h3>
+            {$rightList}
+      </h3>
+      <div class="gd">
+          <h1>{$productInfo.title} </h1>
+          <div class="left1">
+              <dl class='pshow'>
+                  <dt>
+                      <span class='info_img' id='imgqwe'>
+                        <a id='view_bigimg' href='javascript:;'>
+                            <img id='view_img' border='0' width='380' height='350' src='' />
+                        </a>
+                      </span>
+                      <div class='smallimg' style='width:380px;'>
+                        <foreach name="productInfo['newimg']" item="vo">
+                          <span class='spic'>
+                            <a href='javascript:;' class="spic_img">
+                              <img border='0' src='../upload/{$vo}' width='50' height='50' />
+                            </a>
+                          </span>
+                        </foreach>
+                      </div>
+                  </dt>
+              </dl>
+                  <script  LANGUAGE='JavaScript'>
+                    $(document).ready(function() {
+                        $("#view_img").attr("src",$(".spic_img:first").children('img').attr("src"));
+                        $(".spic_img").click(function(){
+                            var src = $(this).children('img').attr("src");
+                            $("#view_img").attr("src",src);
+                        });
+                    });
+                  </script>
+          </div>
+          <div class="rig3">
+              <p><span>项目名称</span>{$productInfo.newparam.param_1} </p>
+              <p><span>项目时间</span>{:date("Y-m-d",$productInfo["create_time"])} </p>
+          </div>
+          <div id="detailed">
+              <h4><span>详细描述</span></h4>
+              <p> {$productInfo.content}</p>
+          </div>
+      </div>
+
+      <div class="met_page"> 上一条：{$next}  下一条： {$up} </div>
+    </div>
+  </div>
+</div>
+</block>

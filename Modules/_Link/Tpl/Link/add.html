@@ -1,0 +1,90 @@
+<extend name="Public:master" />
+<block name="body">
+    <body>
+        <div class="wanhutop">
+
+            <div class="position">企业应用 &gt; <a href="{:U("_Link/Link/index")}">友情链接</a> &gt; 添加链接</div>
+
+
+            <div class="return"><a href="{:U("_Link/Link/index")}">&lt;&lt;返回</a>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+
+        <form method="POST" name="myform" action="{:U('_Link/Link/postAdd')}" target="_self">
+            <div class="v52fmbx_tbmax">
+                <div class="v52fmbx_tbbox">
+                    <div class="v52fmbx">
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">链接名称：</dt>
+                                <dd>
+                                    <input name="name" class="text nonull" value="" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">排序：</dt>
+                                <dd>
+                                    <input name="listorder" class="text nonull" value="0" type="text">
+                                    <span>默认为0</span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">链接地址：</dt>
+                                <dd>
+                                    <input name="link" class="text nonull" value="" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                <div class="v52fmbx_dlbox">
+                    <dl>
+                        <dt style="width: 96px;" >链接图片：</dt>
+                        <dd>
+                            <style>
+                            #file_upload {}
+                            </style>
+                            <div class="avatar_box">
+                                <a href='javascript:void(0);' onclick="javascript:$('#file_upload').uploadify('upload','*');">
+                                    <?php $img_a = empty($logo) ? "../assets/img/upload-pic.png" : "__ROOT__/Public/Uploads/".$logo; ?>
+                                <img id="image" src="{$img_a}" width="135" height="113" border="0" />
+                                </a>
+
+                                <div class="upload_avatar">
+                                    <input id="file_upload" name="file_upload" type="file" multiple="true" value="" />
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                            $(function() {
+                                $('#file_upload').uploadify({
+                                    'swf': '../assets/statics/uploadify/uploadify.swf',
+                                    'uploader': '{:U("Admin/Public/uploadify")}',
+                                    'buttonText': '上传图片',
+                                    'onUploadSuccess': function(file, data, response) {
+                                        $('#image').attr('src', '__ROOT__/Public/Uploads/' + data);
+                                        $('#logo').val(data);
+                                    },
+                                });
+                            });
+                            </script>
+                            <input type="hidden" name="banner" id="logo" value="" />
+                        </dd>
+                    </dl>
+                </div>
+
+                        <div class="v52fmbx_submit">
+                            <input name="Submit" value="保存" class="submit" type="submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </body>
+</block>

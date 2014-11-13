@@ -1,0 +1,25 @@
+<?php //dump($data); ?>
+<div class="right">
+    <ul>
+        <?php foreach ($data as $key => $value): ?>
+            <?php if (is_numeric($key)): ?>
+                <li>
+                <a href="{:a_link($value['tpl_name'].'?id='.$value['id'].'&term_id='.$value['term_id'])}">
+                    <img src="../upload/{$value.thumb_img}" width="160" height="130" />
+                </a><br />
+                <span>
+                    <a href="{:a_link($value['tpl_name'].'?id='.$value['id'].'&term_id='.$value['term_id'])}">
+                        {$value.title}
+                    </a>
+                </span>
+                </li>
+            <?php endif ?>
+        <?php endforeach ?>
+    </ul>
+</div>
+<div id="paging">
+    <div class="pageShow">
+        <?php echo isset($data["pageShow"]["value"]) ? htmlspecialchars_decode($data["pageShow"]["value"]) : $data["pageShow"]; ?>
+    </div>
+</div>
+

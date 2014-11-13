@@ -1,0 +1,18 @@
+<ul id="jMenu">
+    <li><a href="{:a_link('index')}">首页</a> </li>
+    <volist name="data" id="vo">
+    <li>
+        <a href="{:a_link($vo['tpl_name'].'?term_id='.$vo['id'])}">{$vo.name}</a>
+        <?php
+            $child = WH("model.content/Term")->read($vo['id'])->hasChild()->dataData;
+         ?>
+         <?php if ($child): ?>
+            <ul>
+                <foreach name="child" item="va">
+                    <li><a href="{:a_link($vo['tpl_name'].'?term_id='.$va['id'])}">{$va.name}</a></li>
+                </foreach>
+            </ul>
+         <?php endif ?>
+    </li>
+    </volist>
+</ul>

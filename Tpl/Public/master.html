@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><block name="title"></block>{$site_name}</title>
+        <meta name="description" content="{$site_seo_description}" />
+        <meta name="keywords" content="{$site_seo_keywords}" />
+        <meta name="generator" content="{$site_copyright}" />
+        <load href="../index/css/css.css" />
+        <load href="../index/js/jquery.js" />
+        <load href="../index/js/jquery-1.11.1.min.js" />
+        <load href="../index/js/jMenu.jquery.js" />
+        <load href="../index/js/nav.js" />
+        <load href="../index/res/owl/owl.carousel.css" />
+        <load href="../index/res/owl/owl.theme.css" />
+        <load href="../index/res/owl/owl.carousel.js" />
+        <block name="head"></block>
+    </head>
+    <?php
+        $nav = WH("model.content/Term")->where(array('status' =>1))->getList(0);
+
+        $footnav = clone $nav;
+        $footnav->html->WHHtml("nav_1")->dataHtml;
+
+        $nav->html->WHHtml("nav")->dataHtml;
+    ?>
+    <body>
+        <div id="header">
+
+            <div id="top">
+                <div class="logo">
+                    <a href="{:a_link('index')}">
+                        <img src="../upload/{$logo}" width="250" height="62"/>
+                    </a>
+                </div>
+                <div class="topnav">
+                    <ul>
+                        <li class="hy"><strong>{$site_contact}</strong></li>
+                        <li class="sy"><a href="#">设为首页</a> | <a href="#">收藏本站</a> </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="nav">
+                {$nav}
+            </div>
+
+        </div>
+        <div id="slide">
+            <?php
+                $slider = WH("model.slider/Slidercat")->read("top")->getSlider()->select();
+                echo $slider->html->WHHtml("slider");
+            ?>
+        </div>
+        <block name="body"></block>
+
+        <div id="footer">
+            <div class="footer">
+                <p>{$footnav}</p>
+                <p>{$site_other}</p>
+            </div>
+        </div>
+
+    </body>
+</html>

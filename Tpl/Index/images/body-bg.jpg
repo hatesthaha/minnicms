@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Page Not Found!</title>
+<style type="text/css">
+<!--
+body, td, th {  font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000; margin: 0; padding: 0;}
+a:link,
+a:visited {color: #545454;}
+
+.list-none{list-style:none; padding:0px; margin:0px;}
+.clear{clear:both;}
+.headLogo{width:720px; margin:0 auto; *margin:15px auto -6px; _margin:15px auto -6px;}
+.headLogo img{border:none;}
+.navspan{font-weight:bold; font-size:14px;}
+.headNav{margin:0 auto; width:707px; padding-left:13px; _width:710px; _padding-left:10px; height:43px; border:1px solid #9EAA99; border-radius: 3px; box-shadow: 0 0 4px rgba(0,0,0,.25);}
+.headNav ul .line{color:#9EAA99; width:2px;}
+.headNav ul .line2{color:#000; font-weight:bold; width:3px; overflow:hidden;}
+.headNav ul li{float:left; height:43px; line-height:43px; text-align:center;}
+.headNav ul li a{font-size:14px; text-decoration:none;}
+.headNav ul li a:hover{color:#000;}
+.mod_lost_child, .mod_lost_child_little{margin:20px auto 40px !important; *padding-bottom:40px; _padding-bottom:40px;}
+-->
+</style>
+</head>
+<body>
+
+<div class="headLogo">
+			<h2 class="title">
+				<a href="http://www.metinfo.cn/" title="Powered by MetInfo">
+					<img src="http://www.metinfo.cn/upload/200911/1259148297.gif" alt="Powered by MetInfo" title="Powered by MetInfo" />
+				</a>
+			</h2>
+</div>
+
+<div class="headNav"><ul class="list-none"><li id="nav_10001" style='width:87px;' class='navdown'><span class='navspan'>您可以返回</span></li><li class="line2">:</li><li id='nav_24' style='width:86px;' ><a href='http://www.metinfo.cn/web/metcms.htm' 0 title='产品' class='hover-none nav'><span>产品</span></a></li><li class="line">|</li><li id='nav_37' style='width:86px;' ><a href='http://www.metinfo.cn/product/' 0 title='模板' class='hover-none nav'><span>模板</span></a></li><li class="line">|</li><li id='nav_13' style='width:86px;' ><a href='http://www.metinfo.cn/download/' 0 title='下载' class='hover-none nav'><span>下载</span></a></li><li class="line">|</li><li id='nav_41' style='width:86px;' ><a href='http://www.metinfo.cn/faq/shownews857.htm' 0 title='教程' class='hover-none nav'><span>教程</span></a></li><li class="line">|</li><li id='nav_155' style='width:86px;' ><a href='http://www.metinfo.cn/web/product.htm' 0 title='购买' class='hover-none nav'><span>购买</span></a></li><li class="line">|</li><li id='nav_16' style='width:86px;' ><a href='http://www.metinfo.cn/img/' 0 title='案例' class='hover-none nav'><span>案例</span></a></li><li class="line">|</li><li id='nav_50' style='width:86px;' ><a href='http://www.metinfo.cn/cooperate/' 0 title='加盟' class='hover-none nav'><span>加盟</span></a></li></ul><div class="clear"></div></div>
+<script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8"></script>
+
+</body>
+</html>

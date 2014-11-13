@@ -1,0 +1,35 @@
+<extend name="Public:master" />
+<block name="body">
+    <div class="wanhutop">
+    <div class="position">优化推广 &gt; <a href="">网站地图</a></div>
+    </div>
+    <div class="clear"></div>
+    <div class="stat_list">
+        <ul>
+            <li ><a href="{:U("_Count/Count/sitemap")}" title="网站地图">网站地图</a></li>
+
+        </ul>
+    </div>
+    <form method="POST" name="myform" action="{:U('_Count/Count/postSite')}" target="_self">
+    <div class="v52fmbx_tbmax">
+        <div class="v52fmbx_tbbox">
+            <h3 class="v52fmbx_hr metsliding">
+                <a style="float:right;" title="怎样提交给搜索引擎？" target="_blank" href=""></a>网站地图（Sitemap）有助于加快网站被搜索引擎收录
+            </h3>
+
+            <div class="v52fmbx_dlbox">
+                <dl>
+                    <dt >生成适合百度、谷歌、雅虎sitemap：<a target="_blank" href='__ROOT__/sitemap.xml' style="text-decoration:none;">访问生成地图地址  &nbsp;<?php echo $_SERVER['HTTP_HOST']; ?>/sitemap.xml</a></dt>
+                    <dd >
+                    </dd>
+                </dl>
+            </div>
+            <div class="v52fmbx_submit">
+                <input name="Submit" value="生成" class="submit" type="submit">
+            </div>
+
+        </div>
+    </div>
+    </form>
+
+</block>

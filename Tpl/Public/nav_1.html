@@ -1,0 +1,4 @@
+<?php foreach ($data as $key => $value): ?>
+    <a href="{:a_link($value['tpl_name'].'?term_id='.$value['id'])}">{$value.name}</a>
+    <?php echo $key != count($data) - 1 ? " | " : ""; ?>
+<?php endforeach ?>

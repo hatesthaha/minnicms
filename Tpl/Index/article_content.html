@@ -1,0 +1,40 @@
+<extend name="Public:master" />
+
+<block name="head">
+    <load href="../index/css/news.css" />
+</block>
+
+<block name="body">
+<?php
+      $termInfo = WH("model.content/Term")->find($_GET["term_id"]);
+
+      $leftNav = clone $termInfo;
+      $leftNav->html->WHHtml("left_nav");
+      $termInfo = $termInfo->dataData;
+
+      $articleLeft = WH("model.content/Article")->find($_GET['id']);
+      $articleLeft->xml->pq("create_time")->setDateformat("Y-m-d");
+      $articleLeft->html->WHHtml("article_left");
+
+      $next = WH("model.content/Article")->read($_GET["id"])->getNext();
+      $next->html->WHHtml("pagenext");
+
+      $up = WH("model.content/Article")->read($_GET["id"])->getNext("up");
+      $up->html->WHHtml("pagenext");
+?>
+<div id="content">
+  <div class="content">
+    {$leftNav}
+    <div id="right">
+      <h3>
+            <span>{$termInfo.name}</span>
+            当前位置：<a href="{:a_link('index')}">首页</a> &#62;
+            <a href="javascript:;">{$termInfo.name}</a></h3>
+            {$rightList}
+      </h3>
+      {$articleLeft}
+      <div class="met_page"> 上一条：{$next}  下一条：{$up} </div>
+    </div>
+  </div>
+</div>
+</block>

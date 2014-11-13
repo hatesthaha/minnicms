@@ -1,0 +1,10 @@
+<?php
+    // dump($data);
+      if($data){
+        $next_link = a_link($data['tpl_name'].'?id='.$data['id'].'&term_id='.$data['term_id']);
+      }else{
+        $data['title']="没有了";
+        $next_link = "javascript:;";
+      }
+ ?>
+<a href="{$next_link}">{$data.title}</a>

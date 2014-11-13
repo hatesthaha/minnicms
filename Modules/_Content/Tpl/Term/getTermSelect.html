@@ -1,0 +1,6 @@
+<select class="term_select" id="depth_{:count($depth) + 1}">
+	<option selected="selected" value="{$parent_id}" class="">请选择{:count($depth) + 1}级分类</option>
+    <volist name="data" id="vo">
+        <option value="{$vo.id}" class="{:$dTerms->read($vo['id'])->hasChild() ? 'hasChild' : ''}">{$vo.name}</option>
+    </volist>
+</select>

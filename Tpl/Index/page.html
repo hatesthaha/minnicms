@@ -1,0 +1,34 @@
+<extend name="Public:master" />
+
+<block name="head">
+    <load href="../index/css/about.css" />
+</block>
+
+<block name="body">
+    <?php
+        $termInfo=WH("model.content/Term")->find($_GET['term_id']);
+        $leftNav = clone $termInfo;
+
+        $termInfo=$termInfo->dataData;
+
+        $leftNav->html->WHHtml('left_page');
+
+        $rightpage = WH("model.content/Term")->read($_GET["term_id"])->getPage()->getList();
+
+        $rightpage->html->WHHtml('right_page');
+    ?>
+<div id="content">
+  <div class="content">
+    {$leftNav}
+    <div id="right">
+      <h3>
+        <span>{$termInfo.name}</span>
+        当前位置：<a href="{:a_link('index')}">首页</a> &#62;
+        <a href="javascript:;">{$termInfo.name}</a></h3>
+        <div class="right">
+        {$rightpage}
+        </div>
+    </div>
+  </div>
+</div>
+</block>

@@ -1,0 +1,58 @@
+<extend name="Public:master" />
+<block name="body">
+    <body>
+        <div class="wanhutop">
+
+            <div class="position">网站设置 &gt; <a href="{:U("Admin/System/index")}">常用功能</a> &gt; 添加常用功能</div>
+
+
+            <div class="return"><a href="{:U("Admin/System/index")}">&lt;&lt;返回</a>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+
+        <form method="POST" name="myform" action="{:U('Admin/System/postAdd')}" target="_self">
+            <div class="v52fmbx_tbmax">
+                <div class="v52fmbx_tbbox">
+                    <div class="v52fmbx">
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">常用功能：</dt>
+                                <dd style="width:1080px">
+                                    <div class="admin_poplistdiv round">
+                                        <h2>功能模块</h2>
+                                        <div class="clear"></div>
+                                        
+                                            <label><input name="system" class="checkbox" value="内容管理,{:U('_Content/Index/index')}" type="radio">内容管理</label>
+                                            <label><input name="system" class="checkbox" value="栏目管理,{:U('_Content/Term/index')}" type="radio">栏目管理</label>
+                                            <label><input name="system" class="checkbox" value="文章管理,{:U('_Content/Article/index')}" type="radio">文章管理</label>
+                                            <label><input name="system" class="checkbox" value="产品管理,{:U('_Content/Product/index')}" type="radio">产品管理</label>
+                                            <label><input name="system" class="checkbox" value="单页管理,{:U('_Content/Page/index')}" type="radio">单页管理</label>
+                                            <label><input name="system" class="checkbox" value="下载管理,{:U('_Content/Download/index')}" type="radio">下载管理</label>
+                                            <label><input name="system" class="checkbox" value="参数管理,{:U('_Content/Param/index')}" type="radio">参数管理</label>
+                                            <label><input name="system" class="checkbox" value="栏目管理,{:U('Admin/Setting/index')}" type="radio">通用设置</label>
+                                            <label><input name="system" class="checkbox" value="栏目管理,{:U('Admin/Otherinfo/index')}" type="radio">其他内容</label>
+                                            <label><input name="system" class="checkbox" value="栏目管理,{:U('Admin/Module/index')}" type="radio">模块管理</label>
+                                        
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                        <h3 class="v52fmbx_hr metsliding" style="margin:10px 0px;">排序</h3>
+                        <div class="v52fmbx_dlbox" style="padding:0px 10px;">
+                            <input name="listorder" class="text small" value="0" type="text ">
+                            <span class="tips">排序数值越大越靠前</span>
+                        </div>
+                        <div class="v52fmbx_submit">
+                            <input name="Submit" value="保存" class="submit" type="submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </body>
+</block>

@@ -1,0 +1,7 @@
+<marquee scrollamount="1" direction="up" onmouseover="stop()" onmouseout="start()" hspace="0">
+    <ul>
+        <foreach name="data" item="vo">
+            <li><span><a href="{:a_link($vo['tpl_name'].'?id='.$vo['id'])}">{$vo.title}</a></span></li>
+        </foreach>
+    </ul>
+</marquee>

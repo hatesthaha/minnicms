@@ -1,0 +1,164 @@
+<extend name="Public:master" />
+<block name="body">
+    <body>
+        <div class="wanhutop">
+
+            <div class="position">简体中文 &gt; 内容管理 &gt; <a href="">选项管理</a>
+            </div>
+
+
+            <div class="return"><a href="{:U("_Content/Param/index")}">&lt;&lt;返回</a>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="v52fmbx_tbmax">
+            <div class="v52fmbx_tbbox">
+                <table class="table" cellpadding="0" cellspacing="0">
+
+                    <tr>
+                        <td colspan="0" class="centle" style="font-weight:normal; color:#999;">
+                            &nbsp;&nbsp;参数一般用于展示信息的属性，如价格、型号等，设置后在添加内容的时候可以填写对应参数值。<span style="color: red;" id="msg_info"></span>
+                        </td>
+                    </tr>
+
+
+                    <table class="table neitable" cellpadding="0" cellspacing="1">
+                        <tbody>
+                            <tr id="list-top">
+                                <td class="list" width="90">排序</td>
+                                <td class="list">选项名称</td>
+                                <td class="list list_left" width="160">操作</td>
+
+                            </tr>
+                            <volist name="list_data" id="vo">
+                                <tr class="mouse">
+                                    <td class="list-text">
+                                        <input type="hidden" name="id" value="{$vo.pl_id}" class="oldid"/>
+                                        <span class="oldlist">{$vo.pl_listorder}</span>
+                                    </td>
+                                    <td class="list-text" style="padding-left:20px; text-align:left;">
+                                        <span class="oldname">{$vo.pl_name}</span>
+                                    </td>
+
+                                    <td class="list-text list_left">
+                                        <a href="javascript:;" class="edit">编辑</a>
+                                        <a href="javascript:;" class="del" style="margin-left: 10px;">删除</a>
+                                    </td>
+                                </tr>
+                            </volist>
+
+                            <tr class="mouse" style="display: none;" id="tpl">
+                                <td class="list-text">
+                                    <input type="hidden" name="id" value="" />
+                                    <input type="text" class="text" style="width: 30px;" name="listorder" value="0" />
+                                </td>
+                                <td class="list-text" style="padding-left:20px; text-align:left;">
+                                    <input type="text" class="text" style="width: 300px;" name="name">
+                                </td>
+
+                                <td class="list-text list_left">
+									<a href="javascript:;" class="save">保存</a>
+                                    <a href="javascript:;" class="cancel-a" style="margin-left: 10px;">取消</a>
+                                </td>
+                            </tr>
+
+
+
+                            <tr id="bottom-id">
+                                <td class="list-text"></td>
+                                <td class="list-text" colspan="8" style="text-align:left;">&nbsp;&nbsp;
+                                	<a href="javascript:;" id="add_do">+添加新字段</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </table>
+            </div>
+        </div>
+		<script>
+		$(document).ready(function() {
+		    $("#add_do").click(function() {
+		        $(".mouse:last").after($("#tpl").clone());
+		        var clone = $(".mouse:last");
+		        clone.show();
+		        clone.attr("id", "");
+		    });
+            $("body").on("click", ".cancel-a", function() {
+                window.location.reload();
+            });
+            $("body").on("click", ".del", function() {
+                var thistd = $(this).parents(".mouse").children("td");
+                var id = $(thistd).children(".oldid").val();
+                $.post('{:U("_Content/Param/postParanlistDelete")}', {id: id}, function(data, textStatus, xhr) {
+                    if(confirm("确定要删除此选项吗？")){
+                        alert(data);
+                        window.location.reload();
+                    }
+                });
+            });
+            $("body").on("click", ".edit", function() {
+                var thistd = $(this).parents(".mouse").children("td");
+                $(this).parents(".mouse").after($("#tpl").clone().show());
+
+                $("#tpl").attr("id","");
+
+                var id = $(thistd).children(".oldid").val();
+                var list = $(thistd).children(".oldlist").text();
+                var name = $(thistd).children(".oldname").text();
+                console.log(id);
+                $(this).parents(".mouse").next().children().children("input[name='id']").val(id);
+                $(this).parents(".mouse").next().children().children("input[name='listorder']").val(list);
+                $(this).parents(".mouse").next().children().children("input[name='name']").val(name);
+
+                thistd.remove();
+
+            });
+		    $("body").on("click", ".save", function() {
+                var thisclick = $(this);
+		    	var this_td = $(this).parents(".mouse").children("td");
+                var id = $(this_td).children("input[name='id']").val();
+		    	var name = $(this_td).children("input[name='name']").val();
+		    	var listorder = $(this_td).children("input[name='listorder']").val();
+                var url = '{:U("_Content/Param/postSetParam")}';
+                if(id){
+                    url = '{:U("_Content/Param/postUpdateParam")}';
+                }
+		    	if ($.trim(name) === "") {
+		            alert("名称不能为空");
+		        }else if(!$.isNumeric(listorder)){
+		        	 alert("排序只能为数字");
+		        }else{
+		            $.post(url, {
+                        pl_id        : id,
+		                pl_name		 : name,
+		                pl_listorder : listorder,
+		                param_id     : {:I("get.param_id","","int")}
+		            }, function(data, textStatus, xhr) {
+		                if(data){
+                            if(data.rs){
+                                $(this_td).children("input[name='id']").after('<input type="hidden" name="id" value="'+ data.rs +'" class="oldid"/>');
+                            }else{
+                                $(this_td).children("input[name='id']").after('<input type="hidden" name="id" value="'+ id +'" class="oldid"/>');
+                            }
+                            $(this_td).children("input[name='name']").after("<span class='oldname'>" + name + "</span>");
+                            $(this_td).children("input[name='name']").remove();
+
+                            $(this_td).children("input[name='listorder']").after('<span class="oldlist">' + listorder + '</span>');
+                            $(this_td).children("input[name='listorder']").remove();
+
+                            $(thisclick).html("编辑");
+                            $(thisclick).attr("class","edit");
+
+                            $(thisclick).next(".cancel-a").attr("class","del");
+                            $(thisclick).next(".del").html("删除");
+
+                        }
+		            });
+		        }
+		    });
+
+		});
+		</script>
+    </body>
+</block>

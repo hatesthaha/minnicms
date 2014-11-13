@@ -1,0 +1,15 @@
+<?php
+
+        $childList = WH("model.content/Term")->where(array('tpl_name' => "page" ))->getList($data["parent_id"])->dataData;
+
+ ?>
+
+ <div id="left">
+    <h3><span>关于我们</span></h3>
+        <ul>
+            <?php foreach ($childList as $key => $vo): ?>
+                <li <?php echo $vo['id'] ==$data['id']?"class='li'":""; ?>><a href="{:a_link($vo['tpl_name'].'?term_id='.$vo['id'])}">{$vo.name}</a></li>
+            <?php endforeach ?>
+        </ul>
+    <p><a href="#"><img src="../index/images/1385987346.jpg" /></a></p>
+</div>

@@ -1,0 +1,38 @@
+<volist name="data" id="vo">
+    <tr class="mouse" id="node_1">
+        <td class="list-text">
+            <input name="id" value="1" type="checkbox" />
+        </td>
+        <td class="list-text">
+            <input class="text" value="{$vo.listorder}" name="listorders[{$vo.id}]" type="text">
+        </td>
+        <td class="list-text blues" style="text-align:center;">
+            <span class="">
+                <span>{$vo.name}</span>
+            </span>
+        </td>
+        <td class="list-text">
+            <span class="">
+                <span>{$vo.phone}</span>
+            </span>
+        </td>
+        <td class="list-text">
+            <a href="javascript:;" class="">
+                <if condition="$vo.status eq 1">是
+                    <else />
+                    否
+                </if>
+            </a>
+        </td>
+        <td class="list-text">
+            <span class="">
+                <span>{$vo.time}</span>
+            </span>
+        </td>
+
+        <td class="list-text" width="100">
+            <a href="{:U("_Content/Feedback/edit",array('id'=>$vo['id']))}">编辑</a> |
+            <a href="javascript:;" class="del_job" id="job_del_{$vo.id}">删除</a>
+        </td>
+    </tr>
+</volist>

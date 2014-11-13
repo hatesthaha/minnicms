@@ -1,0 +1,282 @@
+<extend name="Public:master" />
+<block name="body">
+
+    <body>
+        <div class="wanhutop">
+
+            <div class="position">内容管理 &gt; <a href="{:U('_Content/Page/add')}">单页产品</a></div>
+
+
+            <div class="return"><a href="javascript:metreturn('');">&lt;&lt;返回</a>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+
+        <form method="POST" name="myform" action="{:U('_Content/Page/postEdit')}" target="_self">
+            <input name="id" value="{$info.id}" type="hidden" />
+            <div class="v52fmbx_tbmax">
+                <div class="v52fmbx_tbbox">
+                    <div class="v52fmbx">
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">所属栏目选项：</dt>
+
+                                <dd>
+                                    {$select_data}
+                                    <script>
+                                    $(document).ready(function() {
+                                        $.each(jQuery.parseJSON('{$parents}'), function(index, val) {
+                                            if(val !== '0'){
+                                                $("#depth_" + index).get(0).value= val;
+                                            }
+                                        });
+                                        set_parent_id({$info.term_id});
+                                        $("#submit-button").attr("disabled", true);
+
+                                        function set_parent_id(id){
+                                            $("input[name='term_id']").val(id);
+                                            $.post('{:U("_Content/Term/getParentInfo")}', { id : id }, function(data, textStatus, xhr) {
+
+                                                if(data.type === "3"){
+                                                    $("#parent_name").html(data.name);
+                                                    $("#submit-button").removeAttr("disabled");
+                                                }else{
+                                                    $("#parent_name").html(data.name + "<span style='color:red;margin-left:10px;'>(注:此不分类不是单页分类)</span>");
+                                                    $("#submit-button").attr("disabled", true);
+                                                }
+                                            });
+                                        }
+                                        $("body").on('change', '.term_select', function() {
+                                            var term_select = $(this);
+                                            var id = term_select.val();
+                                            $.isNumeric(id) ? set_parent_id(id):"";
+
+                                            if ($("option[value='" + id + "']").last().hasClass("hasChild")) {
+                                                $.post('{:U("_Content/Page/getChild")}', {
+                                                    parent_id: id,
+                                                    term_select: 1
+                                                }, function(data, textStatus, xhr) {
+                                                    term_select.after(data);
+                                                });
+                                            }
+                                            var this_depth = parseInt(term_select.attr("id").replace("depth_", ""));
+                                            var last_depth = parseInt($(".term_select").last().attr("id").replace("depth_", ""));
+                                            for (var i = this_depth + 1; i <= last_depth; i++) {
+                                                $("#depth_" + i).remove();
+                                            };
+                                        });
+                                    });
+                                    </script>
+                                    <input type="hidden" name="term_id" value="{$info.term_id}" />
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">所属栏目名称：</dt>
+                                <dd>
+                                    <span id="parent_name"></span>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">标题：</dt>
+                                <dd>
+                                    <input name="title" class="text nonull" value="{$info.title}" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">模版名称：</dt>
+                                <dd>
+                                    <input name="tpl_name" class="text nonull" value="{$info.tpl_name}" type="text">
+                                    <span class="tips">用于模版名的设置</span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox" id="attribute">
+                            <dl>
+                                <dt style="width: 84px;">可选属性：</dt>
+                                <dd class="labelinline" style="width: 901px;">
+                                    <label><input type="checkbox" value="1" class="checkbox" name="param">自定义参数</label>
+
+<script>
+$(document).ready(function() {
+    var newparam = <?php echo json_encode($info[newparam]); ?>;
+            $("input[name='param']").attr("checked","checked");
+            $.post('{:U("_Content/Param/getParams")}', {
+                term_id: $("input[name='term_id']").val()
+            }, function(data, textStatus, xhr) {
+                console.log(data);
+                str = "";
+                $.each(data.data, function(index, val) {
+                    str += '<dl class="paramreal"><dt style="width: 96px;">' + val.param_name + '</dt><dd>' + val.html + '</dd></dl>';
+                });
+                str = '<div class="v52fmbx_dlbox">' + str + '</div>';
+                $("#attribute").after(str);
+                $.each(data.data, function(index, val) {
+                    $.each(newparam, function(k,v){
+                        if(val.param_type == 1 && val.param_lian == k){
+                            $('.'+k).attr('value', v);
+                        }
+                        if(val.param_type == 2 && val.param_lian == k){
+                            $('.'+k).text(v);
+                        }
+                        if(val.param_type == 3 && val.param_lian == k){
+                            $(".param_14").get(0).value= v;
+                        }
+                        if(val.param_type == 4 && val.param_lian == k){
+                            $('.'+k).attr("checked","checked");
+
+                        }
+                        if(val.param_type == 5 && val.param_lian == k){
+                            $(".paramreal").children("dd").children("input[type='checkbox']").each(function (index, domEle) {
+
+                                if($.inArray($(this).val(),v) != -1){
+                                    $(this).attr("checked","checked");
+                                }
+                            });
+                        }
+                    });
+                });
+
+            });
+    $("input[type='checkbox']").prop("checked");
+    $("input[name='param']").click(function() {
+            $(".paramreal").toggle()
+    });
+
+});
+</script>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 72px;">详细内容：</dt>
+                                <dd style="width: 900px;">
+                                    <textarea rows="20" id="editor_id" name="content">{$info.content}</textarea>
+
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <h3 class="v52fmbx_hr metsliding">
+                            搜索引擎优化设置(seo)
+                        </h3>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">页面标题(title)：</dt>
+                                <dd>
+                                    <input name="seo_title" class="text" maxlength="200" value="{$info.seo_title}" type="text">
+                                    <span class="tips">为空则使默认为名称</span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">关键词：</dt>
+                                <dd>
+                                    <input name="seo_keywords" class="text" value="{$info.seo_keywords}" maxlength="200" type="text">
+                                    <span class="tips">多个关键词请用","隔开</span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">简短描述：</dt>
+                                <dd style="width:900px">
+                                    <textarea class="textarea gen" name="seo_contents">{$info.seo_contents}</textarea>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">Tag标签：</dt>
+                                <dd>
+                                    <input name="tag" class="text" maxlength="200" type="text" value="{$info.tag}">
+                                    <span class="tips">多个Tag请用"|"隔开</span>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <h3 class="v52fmbx_hr metsliding">自定义参数</h3>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">封面图：</dt>
+                                <dd>
+                                    <style>
+                                    #file_uploadimg {}
+                                    </style>
+                                    <div class="avatar_box">
+                                        <a href='javascript:void(0);' onclick="javascript:$('#file_uploadimg').uploadify('upload','*');">
+                                        <img id="productimage" src="{:empty($info['img'])?'../assets/img/upload-pic.png': __ROOT__.'/'.C('UPLOAD_PATH').$info['img']}" width="135" height="113" border="0" />
+                                        </a>
+
+                                        <div class="upload_avatar">
+                                            <input id="file_uploadimg" name="file_uploadimg" type="file" multiple="true" value="" />
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                    $(function() {
+                                        $('#file_uploadimg').uploadify({
+                                            'swf': '../assets/statics/uploadify/uploadify.swf',
+                                            'uploader': '{:U("Admin/Public/uploadify")}',
+                                            'buttonText': '上传图片',
+                                            'onUploadSuccess': function(file, data, response) {
+                                                $('#productimage').attr('src', '__ROOT__/Public/Uploads/' + data);
+                                                $('#img').val(data);
+                                            },
+                                        });
+                                    });
+                                    </script>
+                                    <input type="hidden" name="img" id="img" value="{$info.img}" />
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_submit">
+                            <input name="Submit" value="保存" class="submit" type="submit" id="submit-button">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+<load href="../assets/statics/editor/themes/default/default.css" />
+<load href="../assets/statics/editor/plugins/code/prettify.css" />
+<load href="../assets/statics/editor/kindeditor.js" />
+<load href="../assets/statics/editor/plugins/code/prettify.js" />
+<script>
+  var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('textarea[id="editor_id"]', {
+        uploadJson : '../assets/statics/editor/php/upload_json.php',
+        fileManagerJson : '../assets/statics/editor/php/file_manager_json.php',
+        themeType : 'simple',
+        langType:'zh-cn',
+        allowFileManager : true,
+        allowPreviewEmoticons : true,//远程图片关闭
+        allowImageUpload : true, //显示上传图片按钮
+        filterMode : false,
+        loadStyleMode : false,
+        afterBlur:function(){this.sync();},
+        items : ['source', '|', 'fullscreen', 'undo', 'redo', 'print', 'cut', 'copy', 'paste',
+                'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                'justifyfull','table', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                'superscript',
+                'title', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                'italic', 'underline', 'strikethrough', 'removeformat', '|', 'image',
+                'flash', 'media', 'advtable',  'emoticons', 'link', 'unlink',
+                '|', 'baidumap','code','about'],
+        });
+    });
+</script>
+    </body>
+</block>

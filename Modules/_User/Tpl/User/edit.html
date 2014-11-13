@@ -1,0 +1,120 @@
+<extend name="Public:master" />
+<block name="body">
+    <body>
+        <div class="wanhutop">
+
+            <div class="position">网站设置 &gt; <a href="{:U("_User/User/add")}">权限管理</a> &gt; 添加用户</div>
+
+
+            <div class="return"><a href="{:U("_User/User/index")}">&lt;&lt;返回</a>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+
+        <form method="POST" name="myform" action="{:U('_User/User/postEdit')}" target="_self">
+            <input name="id" value="{$info.id}" type="hidden" />
+            <div class="v52fmbx_tbmax">
+                <div class="v52fmbx_tbbox">
+                    <div class="v52fmbx">
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">用户组：</dt>
+                                <dd>
+                                  <select id="group" name="group_id">
+                                    <volist name="group" id="vo">
+                                        <eq name="vo.id" value="$info.group_id">
+                                            <option value="{$vo.id}"  selected>{$vo.name}</option>
+                                        <else />
+                                            <option value="{$vo.id}" >{$vo.name}</option>
+                                        </eq>
+                                    </volist>
+                                  </select>  
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">用户名：</dt>
+                                <dd>
+                                    <input name="username" class="text nonull" value="{$info.username}" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">密码：</dt>
+                                <dd>
+                                    <input name="password" id="pass" class="text nonull" value="" type="password">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">确认密码：</dt>
+                                <dd>
+                                    <input name="repassword" id="repass" class="text nonull" value="" type="password"><span id="paspan"></span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">邮箱：</dt>
+                                <dd>
+                                    <input name="email" class="text nonull" value="{$info.email}" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">电话：</dt>
+                                <dd>
+                                    <input name="phone" class="text nonull" value="{$info.phone}" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">qq：</dt>
+                                <dd>
+                                    <input name="qq" class="text nonull" value="{$info.qq}" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">栏目权限：</dt>
+                                <dd style="width:1080px">
+                                    <div class="admin_poplistdiv round">
+                                        <h2>内容管理</h2>
+                                        <div class="clear"></div>
+                                        <volist name="data" id="vo">
+                                            <label><input  name="role[]" class="checkbox" value="{$vo.id}" <?php if(in_array($vo['id'],$arr)){ echo "checked";} ?> type="checkbox">{$vo.name}</label>
+                                        </volist>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_submit">
+                            <input name="Submit" value="保存" class="submit" type="submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    <script type="text/javascript">
+         $(function(){
+               $("#repass").blur(function(){
+                if(!$(this).val || $(this).val() != $("#pass").val()){
+                    $("#paspan").html("密码为空或者和上面的密码不致");
+                    $("#paspan").css('color','red');
+                }else{
+                    $("#paspan").html("输入正确");
+                    $("#paspan").css('color','green');
+                }
+             });
+         });
+    </script>
+
+    </body>
+</block>

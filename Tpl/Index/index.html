@@ -1,0 +1,56 @@
+<extend name="Public:master" />
+<block name="body">
+
+<div id="content">
+    <div id="news">
+        <div class="news">
+            <h3><span>新闻资讯</span></h3>
+            <div class="marquee">
+                <?php
+                    $marquee = WH("model.Article")->limit(5)->order("create_time desc")->select();
+                    echo $marquee->html->WHHtml("marquee");
+                ?>
+            </div>
+            <div class="form">
+                <form>
+                    <input type="text" size="20" name="searchword" class="text">
+                    <input class="searchimage" type="image" src="../index/images/index_btn.gif" >
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div class="main">
+            <?php
+                $main = WH("model.content/Term")->limit(6)->getList(0)->dataData;
+             ?>
+             <foreach name="main" item="vo">
+                <a href="{:a_link($vo['tpl_name'].'?term_id='.$vo['id'])}">
+                    <span>
+                        <h4 class="xj">{$vo.name}</h4>
+                        <p>{$vo.content}</p>
+                    </span>
+                    <img src="../upload/{$vo.img}" width="100" height="128" />
+                </a>
+             </foreach>
+
+        </div>
+
+    </div>
+
+    <?php
+        $friendlink = WH("model.link/Link")->getList();
+        $friendlink->html->WHHtml("friendlink")->dataHtml;
+    ?>
+
+    <div id="friendlink">
+        <div class="friendlink">
+        <h3>友情链接:</h3>
+            <div class="friendlink2">
+                {$friendlink}
+            </div>
+        </div>
+    </div>
+</div>
+</block>
+

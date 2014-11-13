@@ -1,0 +1,49 @@
+<extend name="Public:master" />
+<block name="body">
+    <body id="column">
+        <div class="wanhutop">
+            <div class="position">网站设置 &gt; <a href="{:U('Admin/System/index')}">常用功能管理</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="v52fmbx_tbmax">
+            <div class="v52fmbx_tbbox">
+                <div class="contc3 classlist2">
+
+                </div>
+                <form method="POST" name="myform" action="{:U('Admin/System/listorder')}" target="_self">
+                <table class="table neitable columntables" cellpadding="0" cellspacing="1">
+                    <tr>
+                        <td class="centle" style="font-weight:normal;" colspan="8">
+                            <a href="{:U("Admin/System/add")}">+ 添加常用功能</a>
+                            <span id="loadtxt" style="color:red"></span>
+                        </td>
+                    </tr>
+                    <tr id="list-top">
+                        <td class="list" width="30">排序</td>
+                        <td class="list" width="1000">功能名称</td>
+                        <td class="list" width="100">操作</td>
+                    </tr>
+                    <volist name="data" id="vo">
+                        <tr class="column" id="node_1">
+                            <td class="list-text">
+                                <input class="text" value="{$vo.listorder}" name="listorders[{$vo.id}]" type="text">
+                            </td>
+                            <td class="list-text color999">{$vo.name}</td>
+                            <td class="list-text" width="100">
+                                <a href="{:U("Admin/System/delete",array('id'=>$vo['id']))}">隐藏</a>
+                            </td>
+                        </tr>
+                    </volist>
+            <tr> 
+                <td style="padding:5px;" colspan="8" class="all-submit">
+                <input type="submit"  class="submit li-submit" value="保存排序" name="saveorder">
+                </td>
+            </tr>
+
+                </table>
+                </form>
+            </div>
+        </div>
+    </body>
+</block>

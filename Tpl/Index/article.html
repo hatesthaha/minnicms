@@ -1,0 +1,39 @@
+<extend name="Public:master" />
+
+<block name="head">
+    <load href="../index/css/news.css" />
+</block>
+
+<block name="body">
+    <?php
+        $termInfo = WH("model.content/Term")->find($_GET["term_id"]);
+
+        $leftNav = clone $termInfo;
+        $leftNav->html->WHHtml("left_nav");
+
+        $pageTheme = "%upPage% %first% %prePage% %linkPage% %nextPage% %end% %downPage%";
+        $rightList = WH("model.content/Term")->read($_GET["term_id"])->getChilds()->getArticle()->getPage(array("pagesize"=>10,"pageTheme"=>$pageTheme))->getList();
+
+        $rightList->xml->pq("create_time")->setDateformat("Y-m-d");
+
+        $rightList->html->WHHtml("right_list");
+        $rightList->html->pq(".pageShow")->wrap('<div class="digg4 metpager_8"></div>');
+
+        $termInfo = $termInfo->dataData;
+
+
+     ?>
+<div id="content">
+    <div class="content">
+        {$leftNav}
+        <div id="right">
+          <h3>
+            <span>{$termInfo.name}</span>
+            当前位置：<a href="{:a_link('index')}">首页</a> &#62;
+            <a href="javascript:;">{$termInfo.name}</a></h3>
+            {$rightList}
+
+        </div>
+    </div>
+</div>
+</block>

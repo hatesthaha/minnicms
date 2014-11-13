@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>后台登录 - 万虎时代企业网站管理系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta name="author" content="">
+    <meta name="copyright" content="">
+    <meta content="万虎时代企业网站管理系统后台登录">
+    <script>
+    	var root = "__ROOT__";
+    </script>
+    <load href="../assets/css/wanhu.css" />
+    <load href="../assets/jquery/jquery-1.11.1.min.js" />
+    <load href="../assets/js/main.js" />
+    <style>
+    html,
+    body {
+        background: #fbfbfb;
+    }
+    </style>
+</head>
+
+
+<body id="login">
+    <div class="login-min">
+        <div class="login-left">
+            <div style=" border-right:1px solid #fff; padding:0px 0px 20px;">
+
+                <a href="http://www.wanhunet.com/" style="font-size:0px;" target="_blank" title="企业网站管理系统" class="img">
+
+                    <img src="data:image/jpg;base64,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" alt="万虎网络" title="万虎网络企业网站管理系统">
+                </a>
+                <p>打造具有营销价值的企业网站</p>
+            </div>
+        </div>
+        <div class="login-right">
+            <h1 class="login-title">管理员登录</h1>
+            <div>
+                <form method="post" action="{:U("Admin/Public/postLogin")}" onsubmit="return check_main_login()">
+                    <p>
+                        <label>用户名</label>
+                        <input class="text" name="username" value="" type="text">
+                    </p>
+                    <p>
+                        <label>密码</label>
+                        <input class="text" name="password" value="" type="password">
+                    </p>
+                    <p class="login-code">
+						<label>验证码</label>
+						<input class="text" name="verify" value="" type="text" style="width: 90px;float: left;">
+                        <img src="{:U('verify')}" alt="验证码" class="verify" style="margin-left: 10px;float: left;" />
+                    </p>
+                    <p class="login-submit">
+                        <input name="Submit" value="登录" type="submit">
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="footer" style="margin-top:80px; display:block!important;">Powered by <b><a href="http://www.wuwenhan.com/" target="_blank">伍文瀚</a></b> ©2008-2014 &nbsp;<a href="http://www.wuwenhan.com/" target="_blank">伍文瀚</a>
+    </div>
+
+
+</body>
+
+</html>

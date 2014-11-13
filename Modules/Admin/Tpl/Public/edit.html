@@ -1,0 +1,55 @@
+<extend name="Public:master" />
+<block name="body">
+    <body>
+            <div class="v52fmbx_tbmax">
+                <form method="POST" name="myform" action="{:U('Admin/Public/postedit')}" target="_self">
+                <input name="id" value="{$user.id}" type="hidden" />
+                <div class="v52fmbx_tbbox">
+                    <div class="v52fmbx">
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">用户名：</dt>
+                                <dd>
+                                    <span id="parent_name">{$user.username}</span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">密码：</dt>
+                                <dd>
+                                    <input name="password" class="text nonull"  id="pass" value="" type="password">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">确认密码：</dt>
+                                <dd>
+                                    <input name="repassword" id="repass" class="text nonull" value="" type="password"><span id="paspan"></span>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_submit">
+                            <input name="Submit" value="保存" class="submit" type="submit" id="submit-button">
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+         $(function(){
+               $("#repass").blur(function(){
+                if(!$(this).val || $(this).val() != $("#pass").val()){
+                    $("#paspan").html("密码为空或者和上面的密码不致");
+                    $("#paspan").css('color','red');
+                }else{
+                    $("#paspan").html("输入正确");
+                    $("#paspan").css('color','green');
+                }
+             });
+         });
+    </script>
+</block>

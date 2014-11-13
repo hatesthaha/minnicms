@@ -1,0 +1,234 @@
+<extend name="Public:master" />
+<block name="body">
+
+    <body>
+        <div class="wanhutop">
+
+            <div class="position">内容管理 &gt; <a href="{:U('_Content/Feedback/add')}">添加内容</a></div>
+
+
+            <div class="return"><a href="javascript:metreturn('');">&lt;&lt;返回</a>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+
+        <form method="POST" name="myform" action="{:U('_Content/Feedback/postAdd')}" target="_self">
+            <div class="v52fmbx_tbmax">
+                <div class="v52fmbx_tbbox">
+                    <div class="v52fmbx">
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">所属栏目选项：</dt>
+
+                                <dd>
+                                    {$select_data}
+                                    <script>
+                                    $(document).ready(function() {
+                                        $("#submit-button").attr("disabled", true);
+                                        function set_parent_id(id){
+                                            $("input[name='term_id']").val(id);
+                                            $.post('{:U("_Content/Term/getParentInfo")}', { id : id }, function(data, textStatus, xhr) {
+                                                if(data.type === "8"){
+                                                    $("#parent_name").html(data.name);
+                                                    $("#submit-button").removeAttr("disabled");
+                                                    $("input[name='tpl_name']").val(data.tpl_name+'_content');
+                                                }else{
+                                                    $("#parent_name").html(data.name + "<span style='color:red;margin-left:10px;'>(注:此不分类不是反馈分类)</span>");
+                                                    $("#submit-button").attr("disabled", true);
+                                                }
+                                            });
+                                        }
+                                        $("body").on('change', '.term_select', function() {
+                                            var term_select = $(this);
+                                            var id = term_select.val();
+                                            $.isNumeric(id) ? set_parent_id(id):"";
+
+                                            if ($("option[value='" + id + "']").last().hasClass("hasChild")) {
+                                                $.post('{:U("_Content/Feedback/getChild")}', {
+                                                    parent_id: id,
+                                                    term_select: 1
+                                                }, function(data, textStatus, xhr) {
+                                                    term_select.after(data);
+                                                });
+                                            }
+                                            var this_depth = parseInt(term_select.attr("id").replace("depth_", ""));
+                                            var last_depth = parseInt($(".term_select").last().attr("id").replace("depth_", ""));
+                                            for (var i = this_depth + 1; i <= last_depth; i++) {
+                                                $("#depth_" + i).remove();
+                                            };
+                                        });
+                                    });
+                                    </script>
+                                    <input type="hidden" name="term_id" value="" />
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">所属栏目名称：</dt>
+                                <dd>
+                                    <span id="parent_name"></span>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">姓名：</dt>
+                                <dd>
+                                    <input name="name" class="text nonull" value="" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">电话：</dt>
+                                <dd>
+                                    <input name="phone" class="text nonull" value="" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">邮箱：</dt>
+                                <dd>
+                                    <input name="email" class="text nonull" value="" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">qq：</dt>
+                                <dd>
+                                    <input name="qq" class="text nonull" value="" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">时间：</dt>
+                                <dd>
+                                    <input name="time" class="text nonull" value="{:date('Y-m-d H:i:s')}" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox" id="attribute">
+                            <dl>
+                                <dt style="width: 84px;">可选属性：</dt>
+                                <dd class="labelinline" style="width: 901px;">
+                                    <label><input type="checkbox" value="1" class="checkbox" name="param">自定义参数</label>
+<script>
+$(document).ready(function() {
+    $("input[type='checkbox']").prop("checked");
+    $("input[name='param']").click(function() {
+        if ($("input[name='param']").is(':checked')) {
+            $.post('{:U("_Content/Param/getParams")}', {
+                term_id: $("input[name='term_id']").val()
+            }, function(data, textStatus, xhr) {
+                str = "";
+                $.each(data.data, function(index, val) {
+                    str += '<dl class="paramreal"><dt style="width: 96px;">' + val.param_name + '</dt><dd>' + val.html + '</dd></dl>';
+                });
+                str = '<div class="v52fmbx_dlbox">' + str + '</div>';
+                $("#attribute").after(str);
+            });
+        } else {
+            $(".paramreal").remove();
+        }
+    });
+});
+</script>
+
+
+                                </dd>
+                            </dl>
+                        </div>
+
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">模版名称：</dt>
+                                <dd>
+                                    <input name="tpl_name" class="text nonull" value="Job" type="text">
+                                    <span class="tips">用于模版名的设置</span>
+                                </dd>
+                            </dl>
+
+                        </div>
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 72px;">反馈内容：</dt>
+                                <dd style="width: 900px;">
+                                    <textarea rows="20" id="editor_id" name="content"></textarea>
+
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 72px;">反馈回复：</dt>
+                                <dd style="width: 900px;">
+                                    <textarea rows="20" cols="110" name="useinfo"></textarea>
+
+                                </dd>
+                            </dl>
+                        </div>
+
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">审核：</dt>
+                                <dd>
+                                    <label>
+                                        <input name="status" class="radio" checked="checked" value="1" type="radio">是
+                                    </label>
+                                    <label>
+                                        <input name="status" class="radio" value="0" type="radio">否
+                                    </label>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_submit">
+                            <input name="Submit" value="保存" class="submit" type="submit" id="submit-button">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+<load href="../assets/statics/editor/themes/default/default.css" />
+<load href="../assets/statics/editor/plugins/code/prettify.css" />
+<load href="../assets/statics/editor/kindeditor.js" />
+<load href="../assets/statics/editor/plugins/code/prettify.js" />
+<script>
+  var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('textarea[id="editor_id"]', {
+        uploadJson : '../assets/statics/editor/php/upload_json.php',
+        fileManagerJson : '../assets/statics/editor/php/file_manager_json.php',
+        themeType : 'simple',
+        langType:'zh-cn',
+        allowFileManager : true,
+        allowPreviewEmoticons : true,//远程图片关闭
+        allowImageUpload : true, //显示上传图片按钮
+        filterMode : false,
+        loadStyleMode : false,
+        afterBlur:function(){this.sync();},
+        items : ['source', '|', 'fullscreen', 'undo', 'redo', 'print', 'cut', 'copy', 'paste',
+                'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                'justifyfull','table', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                'superscript',
+                'title', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                'italic', 'underline', 'strikethrough', 'removeformat', '|', 'image',
+                'flash', 'media', 'advtable',  'emoticons', 'link', 'unlink',
+                '|', 'baidumap','code','about'],
+        });
+    });
+</script>
+    </body>
+</block>

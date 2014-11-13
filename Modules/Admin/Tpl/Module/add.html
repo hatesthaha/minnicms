@@ -1,0 +1,48 @@
+<extend name="Public:master" />
+<block name="body">
+    <body>
+        <div class="wanhutop">
+
+            <div class="position">网站设置 &gt; <a href="{:U("Admin/Module/index")}">模块管理</a> &gt; 添加模块</div>
+
+
+            <div class="return"><a href="{:U("Admin/Module/index")}">&lt;&lt;返回</a>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+
+        <form method="POST" name="myform" action="{:U('Admin/Module/postAdd')}" target="_self">
+            <div class="v52fmbx_tbmax">
+                <div class="v52fmbx_tbbox">
+                    <div class="v52fmbx">
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">模块名称：</dt>
+                                <dd>
+                                    <input name="type_name" class="text nonull" value="" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">模块标识：</dt>
+                                <dd>
+                                    <input name="type_tpl" class="text nonull" value="" type="text">
+                                    <span>英文字母+数字+“_”</span>
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div class="v52fmbx_submit">
+                            <input name="Submit" value="保存" class="submit" type="submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </body>
+</block>

@@ -1,0 +1,49 @@
+<extend name="Public:master" />
+<block name="body">
+    <div class="wanhutop">
+    <div class="position">简体中文 &gt; 企业应用 &gt; <a href="">友情链接</a></div>
+    </div>
+    <div class="clear"></div>
+    <div class="stat_list">
+        <ul>
+            <li ><a href="{:U("_Link/Link/index")}" title="友情链接">友情链接</a></li>
+
+        </ul>
+    </div>
+    <div class="v52fmbx_tbmax">
+        <div class="v52fmbx_tbbox">
+            <form method="POST" name="myform" action="{:U('_Link/Link/listorder')}" target="_self">
+                <table class="table neitable columntables" cellpadding="0" cellspacing="1" id="main_table">
+                    <tr>
+                        <td class="centle" style="font-weight:normal;" colspan="6">
+                            <a href="{:U("_Link/Link/add")}">+ 添加链接</a>
+                            <span id="loadtxt"></span>
+                        </td>
+                    </tr>
+                    <tr id="list-top">
+                        <td class="list" width="30">排序</td>
+                        <td class="list" width="80">链接名称</td>
+                        <td class="list" width="80">链接地址</td>
+                        <td class="list" width="60">操作</td>
+                    </tr>
+                    <volist name="data" id="vo">
+                    <tr class="column" id="node_1">
+                            <td class="list-text"><input class="text" value="{$vo.listorder}" name="listorders[{$vo.id}]" type="text"></td>
+                            <td class="list-text">{$vo.name}</td>
+                            <td class="list-text">{$vo.link}</td>
+                            <td class="list-text">
+                                <a href="{:U("_Link/Link/edit",array('id'=>$vo['id']))}">修改</a>|
+                                <a href="{:U("_Link/Link/delete",array('id'=>$vo['id']))}">删除</a>
+                            </td>
+                    </tr>
+                    </volist>
+                    <tr> 
+                        <td style="padding:5px;" colspan="8" class="all-submit">
+                        <input type="submit"  class="submit li-submit" value="保存排序" name="saveorder">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</block>

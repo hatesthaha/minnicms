@@ -1,0 +1,109 @@
+<extend name="Public:master" />
+<block name="body">
+    <body>
+        <div class="wanhutop">
+
+            <div class="position">企业应用 &gt; <a href="{:U("_Slider/Slider/index")}">网站幻灯片</a> &gt; 添加幻灯片</div>
+
+
+            <div class="return"><a href="{:U("_Slider/Slider/index")}">&lt;&lt;返回</a>
+            </div>
+
+        </div>
+        <div class="clear"></div>
+
+        <form method="POST" name="myform" action="{:U('_Slider/Slider/postEdit')}" target="_self">
+            <input name="id" value="{$info.id}" type="hidden" />
+            <div class="v52fmbx_tbmax">
+                <div class="v52fmbx_tbbox">
+                    <div class="v52fmbx">
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">分类：</dt>
+                                <dd>
+                                    <select name="sid" id="type" style="width: 80px;">
+                                        <volist name="allcat" id="vo">
+                                            <option value="{$vo.id}" <if condition="($vo.id eq $info['sid']) "> selected = 'selected' </if> >{$vo.cat_name}</option>
+                                        </volist>
+                                    </select>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">幻灯片名称：</dt>
+                                <dd>
+                                    <input name="name" class="text nonull" value="{$info.name}" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">排序：</dt>
+                                <dd>
+                                    <input name="listorder" class="text nonull" value="{$info.listorder}" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+                <div class="v52fmbx_dlbox">
+                    <dl>
+                        <dt style="width: 72px;" >幻灯片：</dt>
+                        <dd>
+                            <style>
+                            #file_upload {}
+                            </style>
+                            <div class="avatar_box">
+                                <a href='javascript:void(0);' onclick="javascript:$('#file_upload').uploadify('upload','*');">
+                                    <?php $img_a = empty($info) ? "../assets/img/upload-pic.png" : "__ROOT__/Public/Uploads/".$info['banner']; ?>
+                                <img id="image" src="{$img_a}" width="135" height="113" border="0" />
+                                </a>
+
+                                <div class="upload_avatar">
+                                    <input id="file_upload" name="file_upload" type="file" multiple="true" value="" />
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                            $(function() {
+                                $('#file_upload').uploadify({
+                                    'swf': '../assets/statics/uploadify/uploadify.swf',
+                                    'uploader': '{:U("Admin/Public/uploadify")}',
+                                    'buttonText': '上传图片',
+                                    'onUploadSuccess': function(file, data, response) {
+                                        $('#image').attr('src', '../upload' + data);
+                                        $('#logo').val(data);
+                                    },
+                                });
+                            });
+                            </script>
+                            <input type="hidden" name="banner" id="logo" value="{$info.banner}" />
+                        </dd>
+                    </dl>
+                </div>
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">链接地址：</dt>
+                                <dd>
+                                    <input name="link" class="text nonull" value="{$info.link}" type="text">
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <div class="v52fmbx_dlbox">
+                            <dl>
+                                <dt style="width: 96px;">幻灯片描述：</dt>
+                                <dd style="width: 900px;">
+                                    <textarea cols="50" rows="15" name="content">{$info.content}</textarea>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="v52fmbx_submit">
+                            <input name="Submit" value="保存" class="submit" type="submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </body>
+</block>

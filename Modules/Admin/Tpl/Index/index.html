@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>企业网站管理系统</title>
+    <!-- <link href="http://demo.metinfo.cn/favicon.ico" rel="shortcut icon"> -->
+    <load href="../assets/css/wanhu_box.css" />
+    <load href="../assets/jquery/jquery-1.11.1.min.js" />
+</head>
+
+<body id="indexid" >
+    <div jiluht="707" id="cmsbox">
+        <div id="top">
+            <div style="width: 99%;" class="topnbox">
+                <div class="floatr">
+                    <div class="top-r-box">
+                        <div class="top-right-boxr">
+                            <div class="top-r-t">
+                                <ol class="rnav">
+
+                                    <li class="list">您好 <a href="#" id="mydata" title="编辑 admin 的个人资料" class="tui">{$_SESSION['ADMIN_NAME']}</a>
+                                    </li>
+                                    <li class="line">|</li>
+                                    <li class="list"><a target="_top" href="{:U("Admin/Public/logout")}" id="outhome" title="退出" class="tui">退出</a>
+                                    </li>
+                                    <li class="line">|</li>
+                                    <li class="list"><a href="javascript:;" id="kzqie" title="切换到窄版">窄版</a>
+                                    </li>
+
+                                </ol>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div></div>
+                        <div class="nav">
+                            <ul id="topnav">
+
+                                <li class="list">
+                                    <a href="javascript:;" id="nav_1" hidefocus="true">
+                                        <span class="c1"></span>
+                                        <p>常用功能</p>
+                                    </a>
+                                </li>
+
+                                <li class="list">
+                                    <a class="onnav" href="javascript:;" id="nav_2" hidefocus="true">
+                                        <span class="c2"></span>
+                                        <p>内容管理</p>
+                                    </a>
+                                </li>
+
+                                <li class="list">
+                                    <a href="javascript:;" id="nav_3" hidefocus="true">
+                                        <span class="c3"></span>
+                                        <p>优化推广</p>
+                                    </a>
+                                </li>
+
+                                <li class="list">
+                                    <a href="javascript:;" id="nav_4" hidefocus="true">
+                                        <span class="c4"></span>
+                                        <p>企业应用</p>
+                                    </a>
+                                </li>
+
+                                <li class="list">
+                                    <a href="javascript:;" id="nav_5" hidefocus="true">
+                                        <span class="c5"></span>
+                                        <p>网站设置</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="floatl">
+                    <a hidefocus="true" href="#"></a>
+                </div>
+            </div>
+        </div>
+        <div style="width: 99%;" id="content">
+            <div style="height: 717px;" class="floatl" id="left">
+                <div style="height: 717px;" class="floatl_box">
+                    <div style="position: static; top: 0px; width: 154px;" class="nav_list" id="leftnav">
+                        <div class="fast">
+                            <a target="_blank" href="{:U('Home/Index/index')}" id="qthome" title="网站首页">网站首页</a>
+                        </div>
+
+                        <ul style="display: none;" id="ul_1">
+
+                            <li><a href="{:U('Admin/Index/system')}" target="main" title="系统信息" hidefocus="true">系统信息</a>
+                            </li>
+                            <li><a href="{:U('Admin/Index/delRuntime')}" target="main" title="清除缓存" hidefocus="true">清除缓存</a>
+                            </li>
+                            <volist name="data" id="vo">
+                                <li><a href="{$vo.link}" target="main" title="{$vo.name}" hidefocus="true">{$vo.name}</a>
+                                </li>
+                            </volist>
+                            <li><a href="{:U('Admin/System/index')}" target="main" title="常用功能" hidefocus="true">设置常用功能</a>
+                            </li>
+
+                        </ul>
+
+                        <ul style="display: block;" id="ul_2">
+                            <li><a class="on" href="{:U('_Content/Index/index')}" target="main" title="内容管理">内容管理</a></li>
+                            <li><a href="{:U('_Content/Term/index')}" target="main" title="栏目管理">栏目管理</a></li>
+                            <li><a href="{:U('_Content/Article/index')}" target="main" title="文章管理">文章管理</a></li>
+                            <li><a href="{:U('_Content/Product/index')}" target="main" title="产品管理">产品管理</a></li>
+                            <li><a href="{:U('_Content/Page/index')}" target="main" title="单页管理">单页管理</a></li>
+                            <li><a href="{:U('_Content/Download/index')}" target="main" title="下载管理">下载管理</a></li>
+                            <li><a href="{:U('_Content/Case/index')}" target="main" title="图片模块">图片模块</a></li>
+                            <li><a href="{:U('_Content/Job/index')}" target="main" title="招聘模块">招聘模块</a></li>
+                            <li><a href="{:U('_Content/Param/index')}" target="main" title="参数设置">参数设置</a></li>
+                        </ul>
+
+                        <ul style="display: none;" id="ul_3">
+                            <li>
+                                <a href="{:U('_Count/Count/index')}" target="main" title="访问统计" hidefocus="true">访问统计</a>
+                            </li>
+                            <li>
+                                <a href="{:U('_Count/Count/sitemap')}" target="main" title="网站地图" hidefocus="true">网站地图</a>
+                            </li>
+                        </ul>
+
+                        <ul style="display: none;" id="ul_4">
+                            <li>
+                                <a href="{:U('Admin/Index/app')}" target="main" title="我的应用" hidefocus="true">我的应用</a>
+                            </li>
+
+                        </ul>
+
+                        <ul style="display: none;" id="ul_5">
+                            <li>
+                                <a href="{:U('Admin/Setting/index')}" target="main" title="通用设置" hidefocus="true">通用设置</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Admin/Otherinfo/index')}" target="main" title="模块管理" hidefocus="true">其他内容</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Admin/Module/index')}" target="main" title="模块管理" hidefocus="true">模块管理</a>
+                            </li>
+                            <li>
+                                <a href="{:U('_User/User/index')}" target="main" title="权限管理" hidefocus="true">权限管理</a>
+                            </li>
+                            <li>
+                                <a href="{:U('Admin/Public/edit')}" target="main" title="密码修改" hidefocus="true">密码修改</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div class="claer"></div>
+
+                    <div class="left_footer">
+                        <div class="left_footer_box"><a href="#" target="_blank">我要提建议</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div style="height: 717px;" class="floatr" id="right">
+                <div class="iframe">
+                    <div class="min">
+                        <iframe  style="min-height: 717px"  id="main" name="main" src="{:U("_Content/Index/index")}" frameborder="0"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <load href="../assets/js/iframe.js" />
+</body>
+
+</html>

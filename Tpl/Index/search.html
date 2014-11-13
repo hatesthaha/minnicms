@@ -1,0 +1,27 @@
+                        <?php
+                            $seach = $_GET["post_title"];
+                            $seachData = $action->__seachAll($seach);
+                         ?>
+                        <?php if (isset($seachData[0])): ?>
+                            <div class="list">
+                                <ul>
+                                    <?php foreach ($seachData as $key => $vo): ?>
+                                        <?php if (is_numeric($key)): ?>
+                                            <ul>
+                                                <li>
+                                                    <a href="{:a_link($vo["tpl_name"]."?id=".$vo["id"])}">
+                                                        {$vo.title}<em>[{:date("Y-m-d",$vo['create_time'])}]</em>
+                                                    </a>
+                                                    <p>{:msubstr($vo['seo_contents'], 0, 28)}</p>
+                                                </li>
+                                            </ul>
+                                        <?php endif ?>
+                                    <?php endforeach ?>
+                                </ul>
+                            </div>
+                            <div text-align="center" class="page">
+                                <ul>{:$seachData['pageShow']}</ul>
+                            </div>
+                        <?php else: ?>
+                            <div style="text-align: center;font-weight: bold;font-size: 15px;margin-top: 10px;">没有查到有关内容</div>
+                        <?php endif ?>

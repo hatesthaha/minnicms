@@ -1,0 +1,32 @@
+<div class="contc3 classlist2">
+<span class="color999 left classlist2">栏目：</span>
+<volist name="data" id="vo">
+-
+<a title="{$vo.name}" href="javascript:;" class="termlist" name="{$vo.id}">{$vo.name}</a>
+-
+</volist>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+    function set_data(data){
+        $("#loadtxt").html("");
+        $(".column").remove();
+        $("#list-top").after(data.data);
+        $("#pages").html(data.page);
+    }
+    $("body").on('click', '.termlist', function() {
+        var id = $(this).attr("name");
+       $.post('{:U("_Content/Article/getList")}', { term_id : id}, function(data, textStatus, xhr) {
+            set_data(data);
+        });
+
+    });
+    $("body").on("click","#pages a",function(){
+        var href = $(this).attr("href");
+        $.get(href, function(data) {
+            set_data(data);
+        });
+        return false;
+    });
+});
+</script>

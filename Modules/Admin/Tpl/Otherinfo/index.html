@@ -1,0 +1,74 @@
+<extend name="Public:master" />
+<block name="body">
+    <body id="column">
+        <div class="wanhutop">
+            <div class="position">网站设置 &gt; <a href="{:U('Admin/Otherinfo/index')}">其他内容</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+<form method="POST" name="myform" action="{:U('Admin/Otherinfo/postAdd')}" target="_self"  encType="multipart/form-data">
+
+    <php>if($info['id']):</php>
+    <input type="hidden" class="input" name="id" value="{$info.id}">
+    <php>endif;</php>
+    <div class="v52fmbx_tbmax">
+        <div class="v52fmbx_tbbox">
+            <div class="v52fmbx">
+                <h3 class="v52fmbx_hr metsliding" sliding="1">其他内容</h3>
+                <div class="metsliding_box metsliding_box_1">
+
+                <div class="v52fmbx_dlbox">
+                    <dl>
+                        <dt style="width: 90px;">首页联系方式：</dt>
+                        <dd style="width: 900px;">
+                            <textarea rows="20" cols="108" name="index_contact">{$info.index_contact}</textarea>
+
+                        </dd>
+                    </dl>
+                </div>
+
+                <div class="v52fmbx_dlbox">
+                    <dl>
+                        <dt style="width: 90px;">首页简介：</dt>
+                        <dd style="width: 900px;">
+                            <textarea rows="20" id="editor_id" name="index_context">{$info.index_context}</textarea>
+
+                        </dd>
+                    </dl>
+                </div>
+
+            </div>
+             <div class="v52fmbx_submit"><input name="Submit" value="保存" class="submit"  type="submit"></div>
+        </div>
+
+    </div>
+</form>
+<load href="../assets/statics/editor/themes/default/default.css" />
+<load href="../assets/statics/editor/plugins/code/prettify.css" />
+<load href="../assets/statics/editor/kindeditor.js" />
+<load href="../assets/statics/editor/plugins/code/prettify.js" />
+<script>
+  var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('textarea[id="editor_id"]', {
+        uploadJson : '../assets/statics/editor/php/upload_json.php',
+        fileManagerJson : '../assets/statics/editor/php/file_manager_json.php',
+        themeType : 'simple',
+        langType:'zh-cn',
+        allowFileManager : true,
+        allowPreviewEmoticons : true,//远程图片关闭
+        allowImageUpload : true, //显示上传图片按钮
+        afterBlur:function(){this.sync();},
+        items : ['source', '|', 'fullscreen', 'undo', 'redo', 'print', 'cut', 'copy', 'paste',
+                'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                'superscript',
+                'title', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                'italic', 'underline', 'strikethrough', 'removeformat', '|', 'image',
+                'flash', 'media', 'advtable',  'emoticons', 'link', 'unlink',
+                '|', 'baidumap','code','about'],
+        });
+    });
+</script>
+    </body>
+</block>

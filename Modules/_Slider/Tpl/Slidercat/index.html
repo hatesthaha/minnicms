@@ -1,0 +1,44 @@
+<extend name="Public:master" />
+<block name="body">
+    <div class="wanhutop">
+    <div class="position">简体中文 &gt; 企业应用 &gt; <a href="">网站幻灯片</a></div>
+    </div>
+    <div class="clear"></div>
+    <div class="stat_list">
+        <ul>
+            <li class="now"><a href="{:U("_Slider/Slidercat/index")}" title="幻灯片分类">幻灯片分类</a></li>
+            <li><a href="{:U("_Slider/Slider/index")}" title="幻灯片管理">幻灯片管理</a></li>
+        </ul>
+    </div>
+    <div class="v52fmbx_tbmax">
+        <div class="v52fmbx_tbbox">
+                <table class="table neitable columntables" cellpadding="0" cellspacing="1" id="main_table">
+                    <tr>
+                        <td class="centle" style="font-weight:normal;" colspan="5">
+                            <a href="{:U("_Slider/Slidercat/add")}">+ 添加幻灯片分类</a>
+                            <span id="loadtxt"></span>
+                        </td>
+                    </tr>
+                    <tr id="list-top">
+                        <td class="list" width="30">ID</td>
+                        <td class="list" width="80">分类名称</td>
+                        <td class="list" width="80">分类标识</td>
+                        <td class="list" width="80">描述</td>
+                        <td class="list" width="60">操作</td>
+                    </tr>
+                    <volist name="data" id="vo">
+                    <tr class="column" id="node_1">
+                            <td class="list-text">{$vo.id}</td>
+                            <td class="list-text">{$vo.cat_name}</td>
+                            <td class="list-text">{$vo.cat_idname}</td>
+                            <td class="list-text">{$vo.cat_remark}</td>
+                            <td class="list-text">
+                                <a href="{:U("_Slider/Slidercat/edit",array('id'=>$vo['id']))}">修改</a>|
+                                <a href="{:U("_Slider/Slidercat/delete",array('id'=>$vo['id']))}" class="del_term" id="term_{$vo.id}">删除</a>
+                            </td>
+                    </tr>
+                    </volist>
+                </table>
+        </div>
+    </div>
+</block>
